@@ -6,21 +6,25 @@ import { BsEnvelope, BsBell } from 'react-icons/bs';
 
 const Header = () => {
   return (
-    <header className='max-w-4xl m-auto py-2 flex items-center justify-between'>
-      <Link href={'/'} className='flex items-center gap-4 text-2xl'>
-        <Image
-          src={'/assets/images/logo.png'}
-          width={40}
-          height={40}
-          alt='abc'
-        />
-        <span className='flex font-semibold tracking-widest'>iManage</span>
-      </Link>
-      <nav>
+    <header className=' bg-white'>
+      <nav className='max-w-4xl m-auto py-2 flex items-center justify-between'>
+        <div className='flex items-center gap-4 text-2xl'>
+          <Link href={'/'}>
+            <a>
+              <Image
+                src={'/assets/images/logo.png'}
+                width={40}
+                height={40}
+                alt='abc'
+              />
+            </a>
+          </Link>
+          <span className='flex font-semibold tracking-widest'>iManage</span>
+        </div>
         <ul className='flex gap-4'>
           <IconContainer icon={<BsBell />} link='/' />
-          <IconContainer icon={<BsEnvelope />} link='#' />
-          <IconContainer icon={<AiOutlineLogin link='#' />} />
+          <IconContainer icon={<BsEnvelope />} link='/' />
+          <IconContainer icon={<AiOutlineLogin link='/' />} />
         </ul>
       </nav>
     </header>
