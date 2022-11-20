@@ -2,7 +2,7 @@ import Image from 'next/image';
 import React from 'react';
 import { RiDeleteBinLine, RiEdit2Line } from 'react-icons/ri';
 
-const TableData = ({ image, name, salary, status }) => {
+const TableData = ({ image, name, salary, status, role, typeEmployee }) => {
   let salaryInDollars = salary?.toLocaleString('en-US', {
     style: 'currency',
     currency: 'USD',
@@ -15,7 +15,7 @@ const TableData = ({ image, name, salary, status }) => {
   }
 
   return (
-    <tr className='flex bg-white py-3 rounded-md mb-5 w-full px-3'>
+    <tr className='flex bg-white py-3 rounded-md mb-5 w-full px-3 hover:bg-gray-100 shadow-sm transition-all ease-in-out duration-200'>
       <td className='flex gap-3 w-1/4 '>
         <div className=' justify-center items-center flex w-[50px] h-[50px] border rounded-full'>
           {image ? (
@@ -31,20 +31,20 @@ const TableData = ({ image, name, salary, status }) => {
           )}
         </div>
         <div>
-          <p className='capitalize text-sm text-gray-900 font-semibold '>
+          <p className='capitalize text-sm text-gray-600 font-semibold '>
             {name}
           </p>
-          <p className='capitalize text-xs text-gray-500'>software engineer</p>
+          <p className='capitalize text-xs text-gray-400'>{role}</p>
         </div>
       </td>
 
       <td className='w-1/4 '>
-        <p className=''>{salaryInDollars}</p>
-        <p className='text-gray-400 capitalize text-xs'>full time</p>
+        <p className='text-gray-800'>{salaryInDollars}</p>
+        <p className='text-gray-400 capitalize text-xs'>{typeEmployee}</p>
       </td>
 
       <td className='w-1/4 '>
-        <p>{status}</p>
+        <p className='capitalize text-gray-600'>{status}</p>
       </td>
 
       <td className='w-1/4 flex  gap-5 '>

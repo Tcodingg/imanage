@@ -1,11 +1,9 @@
-import Image from 'next/image';
 import React from 'react';
-import { RiDeleteBinLine, RiEdit2Line } from 'react-icons/ri';
 import TableData from '../TableData/TableData';
 
 const Table = () => {
   return (
-    <section className='mt-5 ml-auto mr-auto overflow-auto min-h-[366px] max-w-4xl bg-gray-100'>
+    <section className='pt-5 ml-auto mr-auto overflow-auto min-h-[366px] max-w-4xl bg-gray-100 h-[calc(100vh-4rem)]'>
       <table className='text-left  border-collapse border-spacing-0 w-full '>
         <thead className=''>
           <tr className='flex justify-between m-0 px-3'>
@@ -21,66 +19,96 @@ const Table = () => {
             name={'john doe'}
             salary={300000}
             status={'active'}
+            role={'software engineer'}
+            typeEmployee={'full time'}
           />
           <TableData
             image={'/assets/images/employee1.png'}
             name={'john doe'}
             salary={300000}
             status={'active'}
+            role={'software engineer'}
+            typeEmployee={'full time'}
           />
           <TableData
             image={'/assets/images/employee1.png'}
             name={'john doe'}
             salary={300000}
             status={'active'}
+            role={'software engineer'}
+            typeEmployee={'full time'}
           />
           <TableData
             image={'/assets/images/employee1.png'}
             name={'john doe'}
             salary={300000}
             status={'active'}
+            role={'software engineer'}
+            typeEmployee={'full time'}
           />
           <TableData
             image={'/assets/images/employee1.png'}
             name={'john doe'}
             salary={300000}
             status={'active'}
+            role={'software engineer'}
+            typeEmployee={'full time'}
           />
           <TableData
             image={'/assets/images/employee1.png'}
             name={'john doe'}
             salary={300000}
             status={'active'}
+            role={'software engineer'}
+            typeEmployee={'full time'}
           />
           <TableData
             image={'/assets/images/employee1.png'}
             name={'john doe'}
             salary={300000}
             status={'active'}
+            role={'software engineer'}
+            typeEmployee={'full time'}
           />
           <TableData
             image={'/assets/images/employee1.png'}
             name={'john doe'}
             salary={300000}
             status={'active'}
+            role={'software engineer'}
+            typeEmployee={'full time'}
           />
           <TableData
             image={'/assets/images/employee1.png'}
             name={'john doe'}
             salary={300000}
             status={'active'}
+            role={'software engineer'}
+            typeEmployee={'full time'}
           />
           <TableData
             image={'/assets/images/employee1.png'}
             name={'john doe'}
             salary={300000}
             status={'active'}
+            role={'software engineer'}
+            typeEmployee={'full time'}
           />
           <TableData
             image={'/assets/images/employee1.png'}
             name={'john doe'}
             salary={300000}
             status={'active'}
+            role={'software engineer'}
+            typeEmployee={'full time'}
+          />
+          <TableData
+            image={'/assets/images/employee1.png'}
+            name={'john doe'}
+            salary={300000}
+            status={'active'}
+            role={'software engineer'}
+            typeEmployee={'full time'}
           />
         </tbody>
       </table>

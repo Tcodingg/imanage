@@ -6,7 +6,7 @@ import { BsEnvelope, BsBell } from 'react-icons/bs';
 
 const Header = () => {
   return (
-    <header className=' bg-white'>
+    <header className=' bg-white h-16'>
       <nav className='max-w-4xl m-auto py-2 flex items-center justify-between'>
         <div className='flex items-center gap-4 text-2xl'>
           <Link href={'/'}>
