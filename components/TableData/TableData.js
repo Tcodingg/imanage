@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import React from 'react';
+import Router from 'next/router';
+import React, { useState } from 'react';
 import { RiDeleteBinLine, RiEdit2Line } from 'react-icons/ri';
 
 const TableData = ({ image, name, salary, status, role, typeEmployee }) => {
@@ -13,6 +14,22 @@ const TableData = ({ image, name, salary, status, role, typeEmployee }) => {
   if (!image) {
     altImage = name?.substring(0, 1).toUpperCase();
   }
+
+  const [editMode, setEditMode] = useState(false);
+
+  const handleEdit = () => {
+    Router.push({
+      pathname: '/edit',
+      query: {
+        image,
+        name,
+        salary,
+        status,
+        role,
+        typeEmployee,
+      },
+    });
+  };
 
   return (
     <tr className='flex bg-white py-3 rounded-md mb-5 w-full px-3 hover:bg-opacity-40 shadow-sm transition-all ease-in-out duration-200'>
@@ -48,15 +65,18 @@ const TableData = ({ image, name, salary, status, role, typeEmployee }) => {
       </td>
 
       <td className='w-1/4 flex  gap-5 '>
-        <Button icon={<RiEdit2Line />} />
+        <Button handleClick={handleEdit} icon={<RiEdit2Line />} />
         <Button icon={<RiDeleteBinLine />} />
       </td>
+      <div></div>
     </tr>
   );
 };
 
 export default TableData;
 
-const Button = ({ icon }) => (
-  <button className='text-2xl text-gray-400'>{icon}</button>
+const Button = ({ icon, handleClick }) => (
+  <button onClick={handleClick} className='text-2xl text-gray-400'>
+    {icon}
+  </button>
 );
