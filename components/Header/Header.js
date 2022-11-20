@@ -34,7 +34,7 @@ const Header = () => {
 export default Header;
 
 const IconContainer = ({ icon, link }) => (
-  <li className='text-2xl text-gray-400 hover:cursor-pointer font-extralight hover:bg-gray-200 p-2 rounded-md transition-all ease-in duration-300'>
+  <li className='text-xl text-gray-400 hover:cursor-pointer font-extralight hover:bg-gray-200 p-2 rounded-md transition-all ease-in duration-300'>
     <Link href={link || '#'}>{icon}</Link>
   </li>
 );
