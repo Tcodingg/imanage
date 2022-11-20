@@ -16,18 +16,72 @@ const Table = () => {
           </tr>
         </thead>
         <tbody>
-          <TableData />
-          <TableData />
-          <TableData />
-          <TableData />
-          <TableData />
-          <TableData />
-          <TableData />
-          <TableData />
-          <TableData />
-          <TableData />
-          <TableData />
-          <TableData />
+          <TableData
+            image={''}
+            name={'john doe'}
+            salary={300000}
+            status={'active'}
+          />
+          <TableData
+            image={'/assets/images/employee1.png'}
+            name={'john doe'}
+            salary={300000}
+            status={'active'}
+          />
+          <TableData
+            image={'/assets/images/employee1.png'}
+            name={'john doe'}
+            salary={300000}
+            status={'active'}
+          />
+          <TableData
+            image={'/assets/images/employee1.png'}
+            name={'john doe'}
+            salary={300000}
+            status={'active'}
+          />
+          <TableData
+            image={'/assets/images/employee1.png'}
+            name={'john doe'}
+            salary={300000}
+            status={'active'}
+          />
+          <TableData
+            image={'/assets/images/employee1.png'}
+            name={'john doe'}
+            salary={300000}
+            status={'active'}
+          />
+          <TableData
+            image={'/assets/images/employee1.png'}
+            name={'john doe'}
+            salary={300000}
+            status={'active'}
+          />
+          <TableData
+            image={'/assets/images/employee1.png'}
+            name={'john doe'}
+            salary={300000}
+            status={'active'}
+          />
+          <TableData
+            image={'/assets/images/employee1.png'}
+            name={'john doe'}
+            salary={300000}
+            status={'active'}
+          />
+          <TableData
+            image={'/assets/images/employee1.png'}
+            name={'john doe'}
+            salary={300000}
+            status={'active'}
+          />
+          <TableData
+            image={'/assets/images/employee1.png'}
+            name={'john doe'}
+            salary={300000}
+            status={'active'}
+          />
         </tbody>
       </table>
     </section>
