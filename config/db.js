@@ -5,13 +5,15 @@ import mongoose from 'mongoose';
 const connectDB = async () => {
   try {
     await mongoose.connect(process.env.DB, {
-      userNewUrlParser: true,
-      userUnifiedTopology: true,
+      maxPoolSize: 50,
+      wtimeoutMS: 2500,
+      useNewUrlParser: true,
     });
 
-    console.log('connect to database');
+    console.log('connected to database');
   } catch (error) {
     console.log(`Database connection failed: ${error}`);
+    process.exit(1);
   }
 };
 
