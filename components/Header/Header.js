@@ -23,7 +23,10 @@ const Header = () => {
         </div>
         <ul className='flex gap-4'>
           <IconContainer icon={<BsBell />} link='/' />
-          <IconContainer icon={<BsEnvelope />} link='/' />
+          <div className='relative'>
+            <span className='bg-green-500 h-2 w-2 absolute rounded-full top-2 left-1'></span>
+            <IconContainer icon={<BsEnvelope />} link='/' />
+          </div>
           <IconContainer icon={<AiOutlineLogin link='/' />} />
         </ul>
       </nav>
