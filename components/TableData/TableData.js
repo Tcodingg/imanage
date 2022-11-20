@@ -15,7 +15,7 @@ const TableData = ({ image, name, salary, status, role, typeEmployee }) => {
   }
 
   return (
-    <tr className='flex bg-white py-3 rounded-md mb-5 w-full px-3 hover:bg-gray-100 shadow-sm transition-all ease-in-out duration-200'>
+    <tr className='flex bg-white py-3 rounded-md mb-5 w-full px-3 hover:bg-opacity-40 shadow-sm transition-all ease-in-out duration-200'>
       <td className='flex gap-3 w-1/4 '>
         <div className=' justify-center items-center flex w-[50px] h-[50px] border rounded-full'>
           {image ? (
