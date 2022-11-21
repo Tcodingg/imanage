@@ -68,7 +68,6 @@ const TableData = ({ image, name, salary, status, role, typeEmployee }) => {
         <Button handleClick={handleEdit} icon={<RiEdit2Line />} />
         <Button icon={<RiDeleteBinLine />} />
       </td>
-      <div></div>
     </tr>
   );
 };

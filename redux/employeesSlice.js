@@ -11,8 +11,8 @@ export const getEmployees = createAsyncThunk(
   'employees/getEmployees',
   async () => {
     try {
-      const response = await axios.get('/api/employees');
-      return response;
+      const { data } = await axios.get('/api/employees');
+      return data;
     } catch (error) {
       return error;
     }
@@ -41,3 +41,5 @@ const employeesSlice = createSlice({
     },
   },
 });
+
+export default employeesSlice.reducer;
