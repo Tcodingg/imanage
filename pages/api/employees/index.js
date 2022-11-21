@@ -9,6 +9,6 @@ export default async (req, res) => {
 
   if (method === 'GET') {
     let allEmployees = await Employees.find({});
-    res.status(200).json({ data: allEmployees });
+    res.status(200).json(allEmployees);
   }
 };

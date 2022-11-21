@@ -3,7 +3,7 @@ import Router from 'next/router';
 import React, { useState } from 'react';
 import { RiDeleteBinLine, RiEdit2Line } from 'react-icons/ri';
 
-const TableData = ({ image, name, salary, status, role, typeEmployee }) => {
+const TableData = ({ id, image, name, salary, status, role, typeEmployee }) => {
   let salaryInDollars = salary?.toLocaleString('en-US', {
     style: 'currency',
     currency: 'USD',
@@ -21,6 +21,7 @@ const TableData = ({ image, name, salary, status, role, typeEmployee }) => {
     Router.push({
       pathname: '/edit',
       query: {
+        id,
         image,
         name,
         salary,
@@ -32,7 +33,10 @@ const TableData = ({ image, name, salary, status, role, typeEmployee }) => {
   };
 
   return (
-    <tr className='flex bg-white py-3 rounded-md mb-5 w-full px-3 hover:bg-opacity-40 shadow-sm transition-all ease-in-out duration-200'>
+    <tr
+      id={id}
+      className='flex bg-white py-3 rounded-md mb-5 w-full px-3 hover:bg-opacity-40 shadow-sm transition-all ease-in-out duration-200'
+    >
       <td className='flex gap-3 w-1/4 '>
         <div className=' justify-center items-center flex w-[50px] h-[50px] border rounded-full'>
           {image ? (

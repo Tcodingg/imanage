@@ -5,8 +5,9 @@ import TableData from '../TableData/TableData';
 
 const Table = () => {
   const dispatch = useDispatch();
-  const state = useSelector((state) => state);
-  console.log(state);
+  const { employees, isLoading, error } = useSelector(
+    (state) => state.employeesSlice
+  );
 
   useEffect(() => {
     dispatch(getEmployees());
@@ -23,102 +24,18 @@ const Table = () => {
           </tr>
         </thead>
         <tbody>
-          <TableData
-            image={''}
-            name={'john doe'}
-            salary={300000}
-            status={'active'}
-            role={'software engineer'}
-            typeEmployee={'full time'}
-          />
-          <TableData
-            image={'/assets/images/employee1.png'}
-            name={'john doe'}
-            salary={300000}
-            status={'active'}
-            role={'software engineer'}
-            typeEmployee={'full time'}
-          />
-          <TableData
-            image={'/assets/images/employee1.png'}
-            name={'john doe'}
-            salary={300000}
-            status={'active'}
-            role={'software engineer'}
-            typeEmployee={'full time'}
-          />
-          <TableData
-            image={'/assets/images/employee1.png'}
-            name={'john doe'}
-            salary={300000}
-            status={'active'}
-            role={'software engineer'}
-            typeEmployee={'full time'}
-          />
-          <TableData
-            image={'/assets/images/employee1.png'}
-            name={'john doe'}
-            salary={300000}
-            status={'active'}
-            role={'software engineer'}
-            typeEmployee={'full time'}
-          />
-          <TableData
-            image={'/assets/images/employee1.png'}
-            name={'john doe'}
-            salary={300000}
-            status={'active'}
-            role={'software engineer'}
-            typeEmployee={'full time'}
-          />
-          <TableData
-            image={'/assets/images/employee1.png'}
-            name={'john doe'}
-            salary={300000}
-            status={'active'}
-            role={'software engineer'}
-            typeEmployee={'full time'}
-          />
-          <TableData
-            image={'/assets/images/employee1.png'}
-            name={'john doe'}
-            salary={300000}
-            status={'active'}
-            role={'software engineer'}
-            typeEmployee={'full time'}
-          />
-          <TableData
-            image={'/assets/images/employee1.png'}
-            name={'john doe'}
-            salary={300000}
-            status={'active'}
-            role={'software engineer'}
-            typeEmployee={'full time'}
-          />
-          <TableData
-            image={'/assets/images/employee1.png'}
-            name={'john doe'}
-            salary={300000}
-            status={'active'}
-            role={'software engineer'}
-            typeEmployee={'full time'}
-          />
-          <TableData
-            image={'/assets/images/employee1.png'}
-            name={'john doe'}
-            salary={300000}
-            status={'active'}
-            role={'software engineer'}
-            typeEmployee={'full time'}
-          />
-          <TableData
-            image={'/assets/images/employee1.png'}
-            name={'john doe'}
-            salary={300000}
-            status={'active'}
-            role={'software engineer'}
-            typeEmployee={'full time'}
-          />
+          {employees?.map((data) => (
+            <TableData
+              key={data?._id}
+              id={data?._id}
+              image={data?.image}
+              name={data?.name}
+              salary={data?.salary}
+              status={data?.status}
+              role={data?.role}
+              typeEmployee={data?.typeEmployee}
+            />
+          ))}
         </tbody>
       </table>
     </section>
