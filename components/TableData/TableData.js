@@ -36,8 +36,8 @@ const TableData = ({ image, name, salary, status, role, typeEmployee }) => {
       <td className='flex gap-3 w-1/4 '>
         <div className=' justify-center items-center flex w-[50px] h-[50px] border rounded-full'>
           {image ? (
-            <Image
-              className='rounded-full justify-center items-center border-2'
+            <img
+              className='rounded-full justify-center items-center border-2 w-[50px] h-[50px]'
               src={image}
               width={50}
               height={50}

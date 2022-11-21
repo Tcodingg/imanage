@@ -9,6 +9,5 @@ const employeesSchema = new mongoose.Schema({
   typeEmployee: String,
 });
 
-const Employees = mongoose.model('Employees', employeesSchema);
-
-export default Employees;
+export default mongoose.models.Employees ||
+  mongoose.model('Employees', employeesSchema);
