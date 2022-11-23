@@ -2,6 +2,8 @@ import Image from 'next/image';
 import Router from 'next/router';
 import React, { useState } from 'react';
 import { RiDeleteBinLine, RiEdit2Line } from 'react-icons/ri';
+import { useDispatch } from 'react-redux';
+import { deleteEmployees } from '../../redux/employeesSlice';
 
 const TableData = ({ id, image, name, salary, status, role, typeEmployee }) => {
   let salaryInDollars = salary?.toLocaleString('en-US', {
@@ -18,18 +20,25 @@ const TableData = ({ id, image, name, salary, status, role, typeEmployee }) => {
   const [editMode, setEditMode] = useState(false);
 
   const handleEdit = () => {
-    Router.push({
-      pathname: '/edit',
-      query: {
-        id,
-        image,
-        name,
-        salary,
-        status,
-        role,
-        typeEmployee,
-      },
-    });
+    // Router.push({
+    //   pathname: '/edit',
+    //   query: {
+    //     id,
+    //     image,
+    //     name,
+    //     salary,
+    //     status,
+    //     role,
+    //     typeEmployee,
+    //   },
+    // });
+  };
+
+  const dispatch = useDispatch();
+
+  const handleDelete = (id) => {
+    // console.log(id);
+    dispatch(deleteEmployees(id));
   };
 
   return (
@@ -70,7 +79,10 @@ const TableData = ({ id, image, name, salary, status, role, typeEmployee }) => {
 
       <td className='w-1/4 flex  gap-5 '>
         <Button handleClick={handleEdit} icon={<RiEdit2Line />} />
-        <Button icon={<RiDeleteBinLine />} />
+        <Button
+          handleClick={() => handleDelete(id)}
+          icon={<RiDeleteBinLine />}
+        />
       </td>
     </tr>
   );
