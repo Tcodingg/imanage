@@ -59,8 +59,6 @@ const employeesSlice = createSlice({
       .addCase(deleteEmployees.fulfilled, (state, action) => {
         state.isLoading = false;
         if (!action?.payload) {
-          console.log('delete can not be completed');
-          console.log(action.payload);
           return;
         }
         let id = action.payload;
