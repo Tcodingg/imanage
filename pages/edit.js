@@ -1,5 +1,6 @@
 import React from 'react';
 import { RiDeleteBinLine } from 'react-icons/ri';
+import Button from '../components/Button/Button';
 
 const Edit = () => {
   const selectClass =
@@ -67,7 +68,7 @@ const Edit = () => {
         </FormsContainer>
       </form>
 
-      <button>Save</button>
+      <Button label={'save'} background={'bg-white'} />
       <button>Cancel</button>
     </section>
   );
