@@ -25,9 +25,25 @@ const Edit = () => {
             </button>
           </div>
         </div>
+        <p className='text-gray-500 mt-2 text-sm'>
+          Recommended size is 256 X 256 or leave it blank.
+        </p>
       </div>
+      <form className='mt-10 flex flex-col'>
+        <Label label={'name'} />
+        <input
+          className='border text-base px-2 py-3 max-w-[340px] '
+          type='text'
+        />
+      </form>
     </section>
   );
 };
 
 export default Edit;
+
+const Label = ({ label, id }) => (
+  <label className='text-gray-500 capitalize pb-1' htmlFor={id}>
+    {label}
+  </label>
+);
