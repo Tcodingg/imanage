@@ -67,9 +67,15 @@ const Edit = () => {
           </select>
         </FormsContainer>
       </form>
-
-      <Button label={'save'} background={'bg-white'} />
-      <button>Cancel</button>
+      <div className='mt-10 flex gap-5'>
+        <Button label={'save'} background={'bg-white'} width={'w-40'} />
+        <Button
+          label={'cancel'}
+          background={'bg-red-400'}
+          width={'w-40'}
+          textColor={'text-white'}
+        />
+      </div>
     </section>
   );
 };
