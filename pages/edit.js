@@ -7,25 +7,25 @@ const Edit = () => {
     'form-select font-sans capitalize appearance-none block w-full px-3 py-3 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 transition-all ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:outline-none';
   return (
     <section className='max-w-4xl m-auto px-6 py-6'>
-      <h3 className='capitalize font-medium pt-6'>Edit Profile</h3>
       <div>
         <div className='flex items-center '>
           <div className='border-4 h-40 w-40 rounded-full mt-3 overflow-hidden'>
             <img src='/assets/images/employee1.png' alt='' />
           </div>
           <div className='flex flex-col ml-6 gap-3'>
-            <button className='w-40 text-center border p-3 bg-green-500 text-white rounded-md'>
-              Change Photo
-            </button>
-            <button
-              className='border p-3 w-40 text-center flex justify-center items-center
-            gap-4'
-            >
-              Delete
-            </button>
+            <Button
+              label={'change photo'}
+              textColor={'text-white'}
+              background={'bg-green-500'}
+            />
+            <Button
+              label={'delete'}
+              textColor={'text-black'}
+              background={'bg-white'}
+            />
           </div>
         </div>
-        <p className='text-gray-500 mt-2 text-sm'>
+        <p className='text-gray-500 mt-5 text-sm'>
           Recommended size is 256 X 256 or leave it blank.
         </p>
       </div>
