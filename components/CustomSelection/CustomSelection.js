@@ -56,7 +56,7 @@ const CustomSelection = ({
             placeholder='Search'
             className='p-3 text-base border-b'
           />
-          <div className='max-h-full overflow-y-scroll'>
+          <ul className='max-h-full overflow-y-scroll z-10 bg-white'>
             {optionsList.map((role, i) => (
               <li
                 onClick={() => handleOptions(role)}
@@ -66,7 +66,7 @@ const CustomSelection = ({
                 {role}
               </li>
             ))}
-          </div>
+          </ul>
         </ul>
       </div>
     </FormsContainer>

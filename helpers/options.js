@@ -9,6 +9,12 @@ export const rolesList = [
   'human resource',
 ];
 
-export const employeeTypeList = ['full time', 'part time'];
+export const employeeTypeList = [
+  'full time',
+  'part time',
+  'seasonal',
+  'temporary',
+  'freelancer',
+];
 
 export const employeeStatusList = ['active', 'not active'];

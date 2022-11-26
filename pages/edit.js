@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
 import Button from '../components/Button/Button';
 import CustomSelection from '../components/CustomSelection/CustomSelection';
-import { employeeTypeList, rolesList } from '../helpers/options';
+import {
+  employeeStatusList,
+  employeeTypeList,
+  rolesList,
+} from '../helpers/options';
 
 const Edit = () => {
   const selectClass =
     'form-select font-sans capitalize appearance-none block w-full px-3 py-3 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 transition-all ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:outline-none';
   const [selectedRole, setSelectedRole] = useState('');
   const [selectedEmployeeType, setSelectedEmployeeType] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState('');
 
   return (
     <section className='max-w-4xl m-auto px-6 py-6'>
@@ -51,14 +56,13 @@ const Edit = () => {
           setSelectedOption={setSelectedEmployeeType}
           label={'type employee'}
         />
+        <CustomSelection
+          optionsList={employeeStatusList}
+          selectedOption={selectedStatus}
+          setSelectedOption={setSelectedStatus}
+          label={'status'}
+        />
 
-        <FormsContainer>
-          <Label label={'type employee'} />
-          <select className={selectClass} name='' id=''>
-            <Option value={'Full Time'} />
-            <Option value={'Part Time'} />
-          </select>
-        </FormsContainer>
         <FormsContainer>
           <Label label={'salary'} />
           <input
