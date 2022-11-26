@@ -8,8 +8,6 @@ import {
 } from '../helpers/options';
 
 const Edit = () => {
-  const selectClass =
-    'form-select font-sans capitalize appearance-none block w-full px-3 py-3 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 transition-all ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:outline-none';
   const [selectedRole, setSelectedRole] = useState('');
   const [selectedEmployeeType, setSelectedEmployeeType] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('');
@@ -69,14 +67,6 @@ const Edit = () => {
             className='border text-base px-2 py-3 appearance-none'
             type='text'
           />
-        </FormsContainer>
-
-        <FormsContainer>
-          <Label label={'status'} />
-          <select className={selectClass} name='' id=''>
-            <Option value={'Active'} />
-            <Option value={'Not Active'} />
-          </select>
         </FormsContainer>
       </form>
       <div className='mt-10 flex gap-5'>
