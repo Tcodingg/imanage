@@ -1,10 +1,14 @@
-import React from 'react';
-import { RiDeleteBinLine } from 'react-icons/ri';
+import React, { useState } from 'react';
 import Button from '../components/Button/Button';
+import CustomSelection from '../components/CustomSelection/CustomSelection';
+import { employeeTypeList, rolesList } from '../helpers/options';
 
 const Edit = () => {
   const selectClass =
     'form-select font-sans capitalize appearance-none block w-full px-3 py-3 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 transition-all ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:outline-none';
+  const [selectedRole, setSelectedRole] = useState('');
+  const [selectedEmployeeType, setSelectedEmployeeType] = useState('');
+
   return (
     <section className='max-w-4xl m-auto px-6 py-6'>
       <div>
@@ -35,15 +39,19 @@ const Edit = () => {
           <input className='border text-base px-2 py-3  ' type='text' />
         </FormsContainer>
 
-        <FormsContainer>
-          <Label label={'role'} />
-          <select className={selectClass} name='' id=''>
-            <Option value={'software engineer'} />
-            <Option value={'executive assistants'} />
-            <Option value={'accountant'} />
-            <Option value={'Administrative assistant'} />
-          </select>
-        </FormsContainer>
+        <CustomSelection
+          optionsList={rolesList}
+          selectedOption={selectedRole}
+          setSelectedOption={setSelectedRole}
+          label={'role'}
+        />
+        <CustomSelection
+          optionsList={employeeTypeList}
+          selectedOption={selectedEmployeeType}
+          setSelectedOption={setSelectedEmployeeType}
+          label={'type employee'}
+        />
+
         <FormsContainer>
           <Label label={'type employee'} />
           <select className={selectClass} name='' id=''>
