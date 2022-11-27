@@ -17,4 +17,10 @@ export const employeeTypeList = [
   'freelancer',
 ];
 
-export const employeeStatusList = ['active', 'not active'];
+export const employeeStatusList = [
+  'active',
+  'not active',
+  'long absence',
+  'terminated',
+  'resigned',
+];

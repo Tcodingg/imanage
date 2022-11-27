@@ -6,19 +6,35 @@ import {
   employeeTypeList,
   rolesList,
 } from '../helpers/options';
+import { AiOutlineUpload } from 'react-icons/ai';
 
-const Edit = () => {
+const Create = () => {
   const [selectedRole, setSelectedRole] = useState('');
   const [selectedEmployeeType, setSelectedEmployeeType] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('');
-
+  function handleChange(e) {
+    let file = e.target.value;
+    console.log(file.replace('C:\\fakepath\\', ''));
+  }
   return (
     <section className='max-w-4xl m-auto px-6 py-6'>
       <div>
         <div className='flex items-center '>
-          <div className='border-4 h-40 w-40 rounded-full mt-3 overflow-hidden'>
+          {/* <div className='border-4 h-40 w-40 rounded-full mt-3 flex flex-col justify-center items-center overflow-hidden'>
             <img src='/assets/images/employee1.png' alt='' />
-          </div>
+
+            <input
+              className='h-full w-full flex flex-col items-center justify-center text-green-500 bg-blue-400'
+              type='file'
+            />
+          </div> */}
+          <label>
+            <input
+              onChange={handleChange}
+              className='w-full h-full'
+              type='file'
+            />
+          </label>
           <div className='flex flex-col ml-6 gap-3'>
             <Button
               label={'change photo'}
@@ -82,7 +98,7 @@ const Edit = () => {
   );
 };
 
-export default Edit;
+export default Create;
 
 const Label = ({ label, id }) => (
   <label className='text-gray-500 capitalize' htmlFor={id}>
