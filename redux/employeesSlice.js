@@ -33,10 +33,15 @@ export const deleteEmployee = createAsyncThunk(
 
 export const createEmployee = createAsyncThunk(
   'employees/createEmployee',
-  async (body) => {
+  async (formData) => {
     try {
-      const { data } = await axios.post('/api/employees', body);
-      return data;
+      const { data } = await axios.post('/api/employees/create', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      // return data;
+      return;
     } catch (error) {
       return error;
     }
@@ -68,17 +73,17 @@ const employeesSlice = createSlice({
       })
 
       // CREATE EMPLOYEE
-      .addCase(createEmployee.fulfilled, (state, action) => {
-        state.isLoading = false;
-        if (!action.payload) {
-          console.log('can not add employee');
-          console.log(action.payload);
-          return;
-        }
+      // .addCase(createEmployee.fulfilled, (state, action) => {
+      //   state.isLoading = false;
+      //   if (!action.payload) {
+      //     console.log('can not add employee');
+      //     console.log(action.payload);
+      //     return;
+      //   }
 
-        let newEmployee = action.payload;
-        state.employees = [...state.employees, newEmployee];
-      })
+      //   let newEmployee = action.payload;
+      //   state.employees = [...state.employees, newEmployee];
+      // })
 
       // DELETE EMPLOYEE
       .addCase(deleteEmployee.fulfilled, (state, action) => {
