@@ -18,13 +18,25 @@ export const getEmployees = createAsyncThunk(
     }
   }
 );
-export const deleteEmployees = createAsyncThunk(
-  'employees/deleteEmployees',
+export const deleteEmployee = createAsyncThunk(
+  'employees/deleteEmployee',
   async (id) => {
     try {
       const response = await axios.delete(`/api/employees/${id}`);
       if (response.status === 200) return id;
       return `${response.status}: ${response.statusText}`;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
+export const createEmployee = createAsyncThunk(
+  'employees/createEmployee',
+  async (body) => {
+    try {
+      const { data } = await axios.post('/api/employees', body);
+      return data;
     } catch (error) {
       return error;
     }
@@ -55,8 +67,21 @@ const employeesSlice = createSlice({
         state.error = action.payload;
       })
 
+      // CREATE EMPLOYEE
+      .addCase(createEmployee.fulfilled, (state, action) => {
+        state.isLoading = false;
+        if (!action.payload) {
+          console.log('can not add employee');
+          console.log(action.payload);
+          return;
+        }
+
+        let newEmployee = action.payload;
+        state.employees = [...state.employees, newEmployee];
+      })
+
       // DELETE EMPLOYEE
-      .addCase(deleteEmployees.fulfilled, (state, action) => {
+      .addCase(deleteEmployee.fulfilled, (state, action) => {
         state.isLoading = false;
         if (!action?.payload) {
           console.log('delete can not be completed');
@@ -70,7 +95,7 @@ const employeesSlice = createSlice({
         );
         state.employees = employees;
       })
-      .addCase(deleteEmployees.rejected, (state, action) => {
+      .addCase(deleteEmployee.rejected, (state, action) => {
         state.isLoading = false;
       });
   },

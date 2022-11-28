@@ -11,10 +11,13 @@ export default async (req, res) => {
     let allEmployees = await Employees.find({});
     return res.status(200).json(allEmployees);
   } else if (method === 'POST') {
-    const employee = req.body.newEmployee;
+    const employee = req.body;
     // const newEmployee = new Employees(employee);
 
     try {
-    } catch (error) {}
+      res.status(200).json(employee);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
   }
 };

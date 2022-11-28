@@ -7,15 +7,14 @@ const CustomSelection = ({
   label,
 }) => {
   const [isShown, setIsShown] = useState(false);
-  // const [selectedRole, setSelectedRole] = useState('');
   const optionsRef = useRef();
   const inputRef = useRef();
 
   useEffect(() => {
     function handler(e) {
       if (
-        !optionsRef.current.contains(e.target) &&
-        !inputRef.current.contains(e.target)
+        !optionsRef?.current?.contains(e.target) &&
+        !inputRef?.current?.contains(e.target)
       ) {
         setIsShown(false);
       }

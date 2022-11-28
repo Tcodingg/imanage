@@ -7,30 +7,39 @@ import {
   rolesList,
 } from '../helpers/options';
 import { AiOutlineUpload } from 'react-icons/ai';
+import { useDispatch } from 'react-redux';
+import { createEmployee } from '../redux/employeesSlice';
 
 const Create = () => {
   const [selectedRole, setSelectedRole] = useState('');
   const [selectedEmployeeType, setSelectedEmployeeType] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('');
-  function handleChange(e) {
-    let file = e.target.value;
-    console.log(file.replace('C:\\fakepath\\', ''));
+  const [selectedImage, setSelectedImage] = useState('');
+  const [selectedSalary, setSelectedSalary] = useState();
+  const [selectedName, setSelectedName] = useState('');
+
+  const dispatch = useDispatch();
+
+  async function handleCreate(e) {
+    e.preventDefault();
+
+    const body = new FormData();
+    body.append('image', selectedImage);
+    body.append('name', selectedName);
+    body.append('role', selectedRole);
+    body.append('typeEmployee', selectedEmployeeType);
+    body.append('status', selectedStatus);
+    body.append('salary', selectedSalary);
+    dispatch(createEmployee(body));
   }
+
   return (
     <section className='max-w-4xl m-auto px-6 py-6'>
       <div>
         <div className='flex items-center '>
-          {/* <div className='border-4 h-40 w-40 rounded-full mt-3 flex flex-col justify-center items-center overflow-hidden'>
-            <img src='/assets/images/employee1.png' alt='' />
-
-            <input
-              className='h-full w-full flex flex-col items-center justify-center text-green-500 bg-blue-400'
-              type='file'
-            />
-          </div> */}
           <label>
             <input
-              onChange={handleChange}
+              onChange={(e) => setSelectedImage(e.target.value)}
               className='w-full h-full'
               type='file'
             />
@@ -55,7 +64,11 @@ const Create = () => {
       <form className='mt-10 flex flex-col gap-6'>
         <FormsContainer>
           <Label label={'name'} />
-          <input className='border text-base px-2 py-3  ' type='text' />
+          <input
+            className='border text-base px-2 py-3  '
+            type='text'
+            onChange={(e) => setSelectedName(e.target.value)}
+          />
         </FormsContainer>
 
         <CustomSelection
@@ -75,6 +88,7 @@ const Create = () => {
           selectedOption={selectedStatus}
           setSelectedOption={setSelectedStatus}
           label={'status'}
+          onChange={(e) => setSelectedStatus(e.target.value)}
         />
 
         <FormsContainer>
@@ -82,11 +96,17 @@ const Create = () => {
           <input
             className='border text-base px-2 py-3 appearance-none'
             type='text'
+            onChange={(e) => setSelectedSalary(e.target.value)}
           />
         </FormsContainer>
       </form>
       <div className='mt-10 flex gap-5'>
-        <Button label={'save'} background={'bg-white'} width={'w-40'} />
+        <Button
+          handleClick={handleCreate}
+          label={'create'}
+          background={'bg-white'}
+          width={'w-40'}
+        />
         <Button
           label={'cancel'}
           background={'bg-red-400'}
