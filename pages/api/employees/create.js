@@ -2,11 +2,12 @@ import nextConnect from 'next-connect';
 import multer from 'multer';
 import { v4 as uuidv4 } from 'uuid';
 import path from 'path';
+import employees from '../../../models/employees';
 
 const upload = multer({
   storage: multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, 'public/assets/images/employees'); // images is the folder located in the root file where its being stored
+      cb(null, 'public/assets/images/employees'); // images is the folder located in the public
     },
     filename: function (req, file, cb) {
       cb(null, Date.now() + file.originalname);
@@ -27,9 +28,31 @@ const handler = nextConnect({
 
 handler.use(upload.single('image')); // attribute name you are sending the file by
 
-handler.post((req, res) => {
-  console.log(req.file);
-  res.status(200).json(req.body); // response
+handler.post(async (req, res) => {
+  const name = req.body.name;
+  const image = req.file.filename;
+  const role = req.body.role;
+  const typeEmployee = req.body.typeEmployee;
+  const status = req.body.status;
+  const salary = req.body.salary;
+
+  const newEmployee = {
+    name,
+    image,
+    role,
+    typeEmployee,
+    status,
+    salary,
+  };
+
+  const addEmployee = new employees(newEmployee);
+
+  try {
+    await addEmployee.save();
+    res.status(201).json(addEmployee);
+  } catch (error) {
+    res.status(409).json({ message: error.message });
+  }
 });
 
 export default handler;

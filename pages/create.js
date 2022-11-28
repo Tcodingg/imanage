@@ -32,7 +32,6 @@ const Create = () => {
     formData.append('salary', selectedSalary);
     dispatch(createEmployee(formData));
   }
-  console.log(selectedImage);
 
   return (
     <section className='max-w-4xl m-auto px-6 py-6'>
