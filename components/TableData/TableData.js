@@ -3,9 +3,14 @@ import Router from 'next/router';
 import React, { useState } from 'react';
 import { RiDeleteBinLine, RiEdit2Line } from 'react-icons/ri';
 import { useDispatch } from 'react-redux';
+import { editEmployee } from '../../redux/editSlice';
 import { deleteEmployee } from '../../redux/employeesSlice';
+import { useRouter } from 'next/router';
 
 const TableData = ({ id, image, name, salary, status, role, typeEmployee }) => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+
   let salaryInDollars = salary?.toLocaleString('en-US', {
     style: 'currency',
     currency: 'USD',
@@ -17,27 +22,14 @@ const TableData = ({ id, image, name, salary, status, role, typeEmployee }) => {
     altImage = name?.substring(0, 1).toUpperCase();
   }
 
-  const [editMode, setEditMode] = useState(false);
+  let employeeData = { id, image, name, salary, status, role, typeEmployee };
 
   const handleEdit = () => {
-    // Router.push({
-    //   pathname: '/edit',
-    //   query: {
-    //     id,
-    //     image,
-    //     name,
-    //     salary,
-    //     status,
-    //     role,
-    //     typeEmployee,
-    //   },
-    // });
+    dispatch(editEmployee(employeeData));
+    router.push('/edit');
   };
 
-  const dispatch = useDispatch();
-
   const handleDelete = (id) => {
-    // console.log(id);
     dispatch(deleteEmployee(id));
   };
 
