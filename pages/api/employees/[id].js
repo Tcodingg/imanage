@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 import employees from '../../../models/employees.js';
 import fs from 'fs';
-import path from 'path';
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (req, res) => {
