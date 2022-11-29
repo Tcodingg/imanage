@@ -40,8 +40,7 @@ export const createEmployee = createAsyncThunk(
           'Content-Type': 'multipart/form-data',
         },
       });
-      // return data;
-      return;
+      return data;
     } catch (error) {
       return error;
     }
@@ -73,17 +72,22 @@ const employeesSlice = createSlice({
       })
 
       // CREATE EMPLOYEE
-      // .addCase(createEmployee.fulfilled, (state, action) => {
-      //   state.isLoading = false;
-      //   if (!action.payload) {
-      //     console.log('can not add employee');
-      //     console.log(action.payload);
-      //     return;
-      //   }
+      .addCase(createEmployee.fulfilled, (state, action) => {
+        state.isLoading = false;
+        if (!action.payload) {
+          console.log('can not add employee');
+          console.log(action.payload);
+          return;
+        }
 
-      //   let newEmployee = action.payload;
-      //   state.employees = [...state.employees, newEmployee];
-      // })
+        let newEmployee = action.payload;
+        state.employees = [...state.employees, newEmployee];
+      })
+
+      .addCase(createEmployee.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
 
       // DELETE EMPLOYEE
       .addCase(deleteEmployee.fulfilled, (state, action) => {
@@ -102,6 +106,7 @@ const employeesSlice = createSlice({
       })
       .addCase(deleteEmployee.rejected, (state, action) => {
         state.isLoading = false;
+        state.error = action.payload;
       });
   },
 });

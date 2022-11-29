@@ -3,7 +3,7 @@ import Router from 'next/router';
 import React, { useState } from 'react';
 import { RiDeleteBinLine, RiEdit2Line } from 'react-icons/ri';
 import { useDispatch } from 'react-redux';
-import { deleteEmployees } from '../../redux/employeesSlice';
+import { deleteEmployee } from '../../redux/employeesSlice';
 
 const TableData = ({ id, image, name, salary, status, role, typeEmployee }) => {
   let salaryInDollars = salary?.toLocaleString('en-US', {
@@ -38,7 +38,7 @@ const TableData = ({ id, image, name, salary, status, role, typeEmployee }) => {
 
   const handleDelete = (id) => {
     // console.log(id);
-    dispatch(deleteEmployees(id));
+    dispatch(deleteEmployee(id));
   };
 
   return (
