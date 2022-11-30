@@ -30,6 +30,21 @@ export const deleteEmployee = createAsyncThunk(
     }
   }
 );
+export const updateEmployee = createAsyncThunk(
+  'employees/updateEmployee',
+  async (employeeData) => {
+    try {
+      const { data } = axios.patch('/api/employees/update', employeeData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return data;
+    } catch (error) {
+      return error;
+    }
+  }
+);
 
 export const createEmployee = createAsyncThunk(
   'employees/createEmployee',
@@ -87,6 +102,18 @@ const employeesSlice = createSlice({
       .addCase(createEmployee.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+      })
+
+      //UPDATE EMPLOYEE
+      .addCase(updateEmployee.fulfilled, (state, action) => {
+        state.isLoading = false;
+        if (!action.payload) {
+          console.log('update cannot be completed');
+          console.log(action.payload);
+        }
+        state.employees = state.employees.map((employee) =>
+          employee._id === action.payload._id ? action.payload : employee
+        );
       })
 
       // DELETE EMPLOYEE

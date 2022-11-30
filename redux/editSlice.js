@@ -14,7 +14,6 @@ const editSlice = createSlice({
   initialState,
   reducers: {
     editEmployee(state, action) {
-      // console.log(action.payload);
       state.employeeData = action.payload;
     },
   },
