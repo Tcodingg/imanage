@@ -30,16 +30,18 @@ export const deleteEmployee = createAsyncThunk(
     }
   }
 );
+
 export const updateEmployee = createAsyncThunk(
   'employees/updateEmployee',
-  async (employeeData) => {
+  async ({ id, formData }) => {
+    // console.log(formData);
     try {
-      const { data } = axios.patch('/api/employees/update', employeeData, {
+      const resp = await axios.patch(`/api/employees/update/${id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-      return data;
+      return;
     } catch (error) {
       return error;
     }

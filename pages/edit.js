@@ -8,12 +8,15 @@ import {
   rolesList,
 } from '../helpers/options';
 
+import { updateEmployee } from '../redux/employeesSlice';
+
 const Edit = () => {
   const {
     editSlice: { employeeData },
   } = useSelector((state) => state);
 
   const [name, setName] = useState(employeeData?.name);
+  const [id, setId] = useState(employeeData?.id);
   const [selectedRole, setSelectedRole] = useState(employeeData.role);
   const [selectedImage, setSelectedImage] = useState(employeeData?.image);
   const [salary, setSalary] = useState(employeeData?.salary);
@@ -24,6 +27,22 @@ const Edit = () => {
   const [newImage, setNewImage] = useState('');
 
   const dispatch = useDispatch();
+  // console.log(employeeData);
+
+  function handleSave(e) {
+    e.preventDefault();
+    const formData = new FormData();
+
+    formData.append('id', id);
+    formData.append('image', selectedImage);
+    formData.append('name', name);
+    formData.append('role', selectedRole);
+    formData.append('typeEmployee', selectedEmployeeType);
+    formData.append('status', selectedStatus);
+    formData.append('salary', salary);
+
+    dispatch(updateEmployee({ id, formData }));
+  }
 
   return (
     <section className='max-w-4xl m-auto px-6 py-6'>
@@ -48,6 +67,7 @@ const Edit = () => {
                 onChange={(e) => {
                   setNewImage(e.target.files[0]);
                   setSelectedImage(e.target.files[0]);
+                  // console.log(e.target.files[0]);
                 }}
               />
             </label>
@@ -104,7 +124,7 @@ const Edit = () => {
       </form>
       <div className='mt-10 flex gap-5'>
         <Button
-          handleClick={() => dispatch({})}
+          handleClick={handleSave}
           label={'save'}
           background={'bg-white'}
           width={'w-40'}
