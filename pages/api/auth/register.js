@@ -10,11 +10,10 @@ export default async (req, res) => {
   const { method } = req;
 
   if (method === 'POST') {
-    const name = req.body.name;
-    const email = req.body.email;
-    const password = req.body.password;
+    const { name, password, email } = req.body;
+
     try {
-      //check if the suer exits
+      // check if the user exits
       const userExists = await Users.findOne({ email: email });
 
       // if the users exits, return an error message
@@ -25,7 +24,7 @@ export default async (req, res) => {
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
 
-      //create new user
+      // create new user
       const user = new Users({
         name,
         email,
@@ -36,11 +35,12 @@ export default async (req, res) => {
       // create a token
       let THIRTY_DAYS = 1000 * 60 * 60 * 24 * 30;
       const token = sign({ id: user._id }, process.env.access_token, {
-        expiresIn: THIRTY_DAYS,
+        expiresIn: Math.floor(Date.now() / 1000) + THIRTY_DAYS,
       });
 
-      const serialized = serialize('em', token, {
+      const serialized = serialize('authentication', token, {
         httpOnly: true,
+        sameSite: 'strict',
         maxAge: THIRTY_DAYS,
         path: '/',
       });
@@ -48,7 +48,7 @@ export default async (req, res) => {
       // avoid sending the password to the frontend
       userInstance.password = undefined;
 
-      //set the header httpOnly cookie
+      // set the header httpOnly cookie
       res.setHeader('Auth', serialized);
 
       res.status(201).json(userInstance);
