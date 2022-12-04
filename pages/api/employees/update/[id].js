@@ -1,6 +1,7 @@
 import nextConnect from 'next-connect';
 import multer from 'multer';
 import employees from '../../../../models/employees';
+import fs from 'fs';
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -45,10 +46,35 @@ handler.patch(async (req, res) => {
       status,
       salary,
     };
+
+    let result;
     try {
       const employee = await employees.findById(id);
-      console.log(image);
-      res.status(200).json(employee);
+      if (image) {
+        let imagePath = `public/assets/images/employees/${employee.image}`;
+        fs.unlinkSync(imagePath);
+
+        result = await employees.findByIdAndUpdate(id, {
+          name,
+          image,
+          role,
+          typeEmployee,
+          status,
+          salary,
+        });
+      } else {
+        result = await employees.findByIdAndUpdate(id, {
+          image: employee.image,
+          name,
+          role,
+          typeEmployee,
+          status,
+          salary,
+        });
+      }
+
+      console.log(result, image);
+      res.status(200).json(result);
     } catch (error) {
       res.status(400).json({ message: error.message });
     }

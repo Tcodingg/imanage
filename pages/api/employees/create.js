@@ -1,7 +1,5 @@
 import nextConnect from 'next-connect';
 import multer from 'multer';
-import { v4 as uuidv4 } from 'uuid';
-import path from 'path';
 import employees from '../../../models/employees';
 
 const upload = multer({
@@ -30,7 +28,7 @@ handler.use(upload.single('image')); // attribute name you are sending the file 
 
 handler.post(async (req, res) => {
   const name = req.body.name;
-  const image = req.file.filename;
+  const image = req.file?.filename;
   const role = req.body.role;
   const typeEmployee = req.body.typeEmployee;
   const status = req.body.status;

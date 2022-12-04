@@ -27,7 +27,6 @@ const Edit = () => {
   const [newImage, setNewImage] = useState('');
 
   const dispatch = useDispatch();
-  // console.log(employeeData);
 
   function handleSave(e) {
     e.preventDefault();
@@ -67,7 +66,6 @@ const Edit = () => {
                 onChange={(e) => {
                   setNewImage(e.target.files[0]);
                   setSelectedImage(e.target.files[0]);
-                  // console.log(e.target.files[0]);
                 }}
               />
             </label>
