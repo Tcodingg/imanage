@@ -1,8 +1,7 @@
-import connectDB from '../../../config/db.js';
 import bcrypt from 'bcrypt';
 import Users from '../../../models/usersModel';
 import { sign } from 'jsonwebtoken';
-import { serialize, serialized } from 'cookie';
+import { serialize } from 'cookie';
 import dotenv from 'dotenv';
 dotenv.config();
 // eslint-disable-next-line import/no-anonymous-default-export
