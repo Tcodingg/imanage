@@ -22,9 +22,11 @@ export const deleteEmployee = createAsyncThunk(
   'employees/deleteEmployee',
   async (id) => {
     try {
-      const response = await axios.delete(`/api/employees/${id}`);
-      if (response.status === 200) return id;
-      return `${response.status}: ${response.statusText}`;
+      await axios.delete(`/api/employees/delete/${id}`);
+
+      return id;
+      // if (response.status === 200) return id;
+      // return `${response.status}: ${response.statusText}`;
     } catch (error) {
       return error;
     }

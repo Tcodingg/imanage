@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import employees from '../../../models/employees.js';
+import employees from '../../../../models/employees';
 import fs from 'fs';
 
 // eslint-disable-next-line import/no-anonymous-default-export
