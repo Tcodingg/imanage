@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import { verify } from 'jsonwebtoken';
 
 export const config = {
-  matcher: '/edit',
+  matcher: ['/edit', '/api/employees/delete/:path*'],
 };
 
 export default function middleware(req) {
@@ -12,7 +12,10 @@ export default function middleware(req) {
   const jwt = cookies.get('authentication');
   const url = req.nextUrl.clone();
 
-  if (req.nextUrl.pathname.includes('/edit')) {
+  if (
+    req.nextUrl.pathname.includes('/edit') ||
+    req.nextUrl.pathname.includes('/api/employees/delete/')
+  ) {
     url.pathname = '/login';
 
     if (!jwt) {
