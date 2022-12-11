@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../redux/authSlice';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 const Login = () => {
   const [input, setInput] = useState({
@@ -12,6 +13,20 @@ const Login = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
+  const {
+    authSlice: { isAuthenticated },
+  } = useSelector((state) => state);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      console.log(router.query.from);
+      router.push(
+        router.query.from ? decodeURIComponent(router.query.from) : '/'
+      );
+    }
+  }, [isAuthenticated]);
+
+  console.log(isAuthenticated);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setInput({ ...input, [name]: value });
@@ -20,7 +35,6 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(login(input));
-    router.push('/');
   };
 
   return (

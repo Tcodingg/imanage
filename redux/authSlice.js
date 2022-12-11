@@ -7,6 +7,7 @@ const initialState = {
     name: '',
     email: '',
   },
+  isAuthenticated: false,
   error: null,
 };
 
@@ -27,9 +28,11 @@ const authSlice = createSlice({
     builder
       .addCase(login.fulfilled, (state, action) => {
         state.user = action.payload;
+        state.isAuthenticated = true;
       })
       .addCase(login.rejected, (state, action) => {
         state.error = action.payload;
+        state.isAuthenticated = false;
       });
   },
 });
