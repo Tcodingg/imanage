@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { login } from '../redux/authSlice';
+import { useRouter } from 'next/router';
 
 const Login = () => {
   const [input, setInput] = useState({
@@ -6,9 +9,18 @@ const Login = () => {
     password: '',
   });
 
+  const dispatch = useDispatch();
+  const router = useRouter();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setInput({ ...input, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(login(input));
+    router.push('/');
   };
 
   return (
@@ -36,7 +48,10 @@ const Login = () => {
               type='password'
             />
           </div>
-          <button className='bg-blue-500 py-3 text-white rounded-sm'>
+          <button
+            onClick={handleSubmit}
+            className='bg-blue-500 py-3 text-white rounded-sm'
+          >
             Submit
           </button>
         </form>

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+axios.defaults.withCredentials = true;
 
 const initialState = {
   employees: [],
@@ -62,6 +63,7 @@ export const createEmployee = createAsyncThunk(
         headers: {
           'Content-Type': 'multipart/form-data',
         },
+        width,
       });
       return data;
     } catch (error) {

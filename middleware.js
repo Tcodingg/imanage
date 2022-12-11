@@ -1,15 +1,16 @@
 import { NextResponse } from 'next/server';
-import dotenv from 'dotenv';
 import { verify } from 'jsonwebtoken';
-
+import getConfig from 'next/config';
+import { jwtVerify } from 'jose';
 export const config = {
   matcher: ['/edit', '/api/employees/delete/:path*'],
 };
 
-export default function middleware(req) {
+export default async function middleware(req) {
   const { cookies, method } = req;
+  const access_token = process.env.access_token;
 
-  const jwt = cookies.get('authentication');
+  const jwt = cookies.get('token');
   const url = req.nextUrl.clone();
 
   if (
@@ -19,11 +20,14 @@ export default function middleware(req) {
     url.pathname = '/login';
 
     if (!jwt) {
-      console.log('no jwt', req.nextUrl.pathname);
       return NextResponse.redirect(url);
     }
     try {
-      verify(jwt, access_token);
+      const { payload } = await jwtVerify(
+        jwt,
+        new TextEncoder().encode(access_token)
+      );
+
       return NextResponse.next();
     } catch (error) {
       return NextResponse.redirect(url);

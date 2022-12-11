@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const initialState = {
   user: {
+    id: '',
     name: '',
     email: '',
   },
@@ -11,8 +12,7 @@ const initialState = {
 
 export const login = createAsyncThunk('auth/login', async (body) => {
   try {
-    const { data } = axios.post('/api/employees/login', body);
-    console.log(data);
+    const { data } = await axios.post('/api/auth/login', body);
     return data;
   } catch (error) {
     return error;
