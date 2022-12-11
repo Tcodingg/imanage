@@ -1,14 +1,24 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import employeesSlice from './employeesSlice';
 import editSlice from './editSlice';
 import authSlice from './authSlice';
+import storage from 'redux-persist/lib/storage';
+import { persistStore, persistReducer } from 'redux-persist';
 
-const store = configureStore({
-  reducer: {
-    employeesSlice,
-    editSlice,
-    authSlice,
-  },
+const persistConfig = {
+  key: 'root',
+  storage,
+};
+let rootReducer = combineReducers({
+  employeesSlice,
+  editSlice,
+  authSlice,
 });
 
-export default store;
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+export const store = configureStore({
+  reducer: persistedReducer,
+});
+
+export const persisterStore = persistStore(store);
