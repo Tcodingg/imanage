@@ -63,7 +63,6 @@ export const createEmployee = createAsyncThunk(
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-        width,
       });
       return data;
     } catch (error) {
@@ -99,6 +98,7 @@ const employeesSlice = createSlice({
       // CREATE EMPLOYEE
       .addCase(createEmployee.fulfilled, (state, action) => {
         state.isLoading = false;
+
         if (!action.payload) {
           console.log('can not add employee');
           console.log(action.payload);

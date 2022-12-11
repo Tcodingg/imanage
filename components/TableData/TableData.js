@@ -1,11 +1,10 @@
 import Image from 'next/image';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { RiDeleteBinLine, RiEdit2Line } from 'react-icons/ri';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { editEmployee } from '../../redux/editSlice';
 import { deleteEmployee } from '../../redux/employeesSlice';
-import { useRouter } from 'next/router';
 
 const TableData = ({ id, image, name, salary, status, role, typeEmployee }) => {
   const dispatch = useDispatch();
@@ -16,6 +15,10 @@ const TableData = ({ id, image, name, salary, status, role, typeEmployee }) => {
     currency: 'USD',
     minimumFractionDigits: 0,
   });
+
+  const {
+    authSlice: { isAuthenticated },
+  } = useSelector((state) => state);
 
   let altImage;
   if (!image) {
@@ -30,7 +33,11 @@ const TableData = ({ id, image, name, salary, status, role, typeEmployee }) => {
   };
 
   const handleDelete = (id) => {
-    dispatch(deleteEmployee(id));
+    if (!isAuthenticated) {
+      router.push('/login');
+    } else {
+      dispatch(deleteEmployee(id));
+    }
   };
 
   return (
