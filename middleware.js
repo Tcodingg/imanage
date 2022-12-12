@@ -1,6 +1,4 @@
 import { NextResponse } from 'next/server';
-import { verify } from 'jsonwebtoken';
-import getConfig from 'next/config';
 import { jwtVerify } from 'jose';
 export const config = {
   matcher: ['/edit', '/api/employees/delete/:path*'],

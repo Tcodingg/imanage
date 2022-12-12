@@ -1,10 +1,21 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import { AiOutlineLogin } from 'react-icons/ai';
+import { AiOutlineLogin, AiOutlineLogout } from 'react-icons/ai';
 import { BsEnvelope, BsBell } from 'react-icons/bs';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../redux/authSlice';
 
 const Header = () => {
+  const {
+    authSlice: { isAuthenticated },
+  } = useSelector((state) => state);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    console.log('logout');
+    dispatch(logout());
+  };
   return (
     <header className=' bg-white h-16'>
       <nav className='max-w-4xl m-auto py-2 flex items-center justify-between'>
@@ -22,12 +33,22 @@ const Header = () => {
           <span className='flex font-semibold tracking-widest'>iManage</span>
         </div>
         <ul className='flex gap-4'>
-          <IconContainer icon={<BsBell />} link='/' />
+          <IconContainer icon={<BsBell />} />
           <div className='relative'>
             <span className='bg-green-500 h-2 w-2 absolute rounded-full top-2 left-1'></span>
-            <IconContainer icon={<BsEnvelope />} link='/' />
+            <IconContainer icon={<BsEnvelope />} />
           </div>
-          <IconContainer icon={<AiOutlineLogin link='/' />} />
+          <div>
+            {isAuthenticated ? (
+              <IconContainer
+                handleClick={handleLogout}
+                icon={<AiOutlineLogout />}
+                to={'/'}
+              />
+            ) : (
+              <IconContainer icon={<AiOutlineLogin />} to={'/login'} />
+            )}
+          </div>
         </ul>
       </nav>
     </header>
@@ -36,8 +57,10 @@ const Header = () => {
 
 export default Header;
 
-const IconContainer = ({ icon, link }) => (
+const IconContainer = ({ icon, to, handleClick }) => (
   <li className='text-xl text-gray-400 hover:cursor-pointer font-extralight hover:bg-gray-200 p-2 rounded-md transition-all ease-in duration-300'>
-    <Link href={link || '#'}>{icon}</Link>
+    <Link href={to || '#'}>
+      <a onClick={handleClick}>{icon}</a>
+    </Link>
   </li>
 );

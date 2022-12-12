@@ -7,13 +7,13 @@ import { PersistGate } from 'redux-persist/integration/react';
 
 function MyApp({ Component, pageProps }) {
   return (
-    <Layout>
-      <Provider store={store}>
-        <PersistGate persistor={persisterStore}>
+    <Provider store={store}>
+      <PersistGate persistor={persisterStore}>
+        <Layout>
           <Component {...pageProps} />
-        </PersistGate>
-      </Provider>
-    </Layout>
+        </Layout>
+      </PersistGate>
+    </Provider>
   );
 }
 
