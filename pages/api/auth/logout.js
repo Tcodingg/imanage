@@ -1,10 +1,10 @@
 /* eslint-disable import/no-anonymous-default-export */
-import { cookie, serialize } from 'cookie';
+import { serialize } from 'cookie';
 
 export default async (req, res) => {
   const { cookies } = req;
 
-  const jwt = cookies.get('token');
+  const jwt = cookies.token;
 
   if (!jwt) {
     return res.json({ message: 'You already have logged out!' });
