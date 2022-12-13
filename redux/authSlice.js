@@ -11,23 +11,30 @@ const initialState = {
   error: null,
 };
 
-export const login = createAsyncThunk('auth/login', async (body) => {
-  try {
-    const { data } = await axios.post('/api/auth/login', body);
-    return data;
-  } catch (error) {
-    return error;
-  }
-});
+export const login = createAsyncThunk(
+  'auth/login',
+  async (body, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post('/api/auth/login', body);
 
-export const logout = createAsyncThunk('/auth/logout', async () => {
-  try {
-    await axios.get('/api/auth/logout');
-    return;
-  } catch (error) {
-    return error;
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
-});
+);
+
+export const logout = createAsyncThunk(
+  '/auth/logout',
+  async (_, { rejectWithValue }) => {
+    try {
+      await axios.get('/api/auth/logout');
+      return;
+    } catch (error) {
+      rejectWithValue(error.message);
+    }
+  }
+);
 
 const authSlice = createSlice({
   name: 'auth',
@@ -43,6 +50,8 @@ const authSlice = createSlice({
         state.error = action.payload;
         state.isAuthenticated = false;
       })
+
+      //LOGOUT
       .addCase(logout.fulfilled, (state) => {
         state.isAuthenticated = false;
         state.user = {};
