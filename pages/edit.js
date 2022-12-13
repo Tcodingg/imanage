@@ -1,4 +1,6 @@
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '../components/Button/Button';
 import CustomSelection from '../components/CustomSelection/CustomSelection';
@@ -25,22 +27,48 @@ const Edit = () => {
   );
   const [selectedStatus, setSelectedStatus] = useState(employeeData?.status);
   const [newImage, setNewImage] = useState('');
+  const [error, setError] = useState(null);
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (
+      name &&
+      selectedRole &&
+      selectedImage &&
+      salary &&
+      selectedEmployeeType &&
+      selectedStatus
+    ) {
+      setError(false);
+    } else {
+      setError(true);
+    }
+  }, [
+    name,
+    selectedRole,
+    selectedImage,
+    salary,
+    selectedEmployeeType,
+    selectedStatus,
+  ]);
+
+  const router = useRouter();
   function handleSave(e) {
     e.preventDefault();
-    const formData = new FormData();
+    if (!error) {
+      const formData = new FormData();
 
-    formData.append('id', id);
-    formData.append('image', selectedImage);
-    formData.append('name', name);
-    formData.append('role', selectedRole);
-    formData.append('typeEmployee', selectedEmployeeType);
-    formData.append('status', selectedStatus);
-    formData.append('salary', salary);
-
-    dispatch(updateEmployee({ id, formData }));
+      formData.append('id', id);
+      formData.append('image', selectedImage);
+      formData.append('name', name);
+      formData.append('role', selectedRole);
+      formData.append('typeEmployee', selectedEmployeeType);
+      formData.append('status', selectedStatus);
+      formData.append('salary', salary);
+      dispatch(updateEmployee({ id, formData }));
+      router.push('/');
+    }
   }
 
   return (
@@ -69,11 +97,6 @@ const Edit = () => {
                 }}
               />
             </label>
-            <Button
-              label={'delete'}
-              textColor={'text-black'}
-              background={'bg-white'}
-            />
           </div>
         </div>
         <p className='text-gray-500 mt-5 text-sm'>
@@ -128,12 +151,18 @@ const Edit = () => {
           width={'w-40'}
         />
         <Button
+          handleClick={() => router.push('/')}
           label={'cancel'}
           background={'bg-red-400'}
           width={'w-40'}
           textColor={'text-white'}
         />
       </div>
+      {error && (
+        <small className='text-red-500 text-center'>
+          Please fill out all fields!{' '}
+        </small>
+      )}
     </section>
   );
 };
