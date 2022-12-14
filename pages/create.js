@@ -11,27 +11,27 @@ const Create = () => {
   const [newImage, setNewImage] = useState('');
   const [error, setError] = useState(null);
 
-  return (
-    <Form
-      action={'create'}
-      name={name}
-      setName={setName}
-      selectedRole={selectedRole}
-      setSelectedRole={setSelectedRole}
-      selectedEmployeeType={selectedEmployeeType}
-      setSelectedEmployeeType={setSelectedEmployeeType}
-      selectedStatus={selectedStatus}
-      setSelectedStatus={setSelectedStatus}
-      salary={salary}
-      setSalary={setSalary}
-      selectedImage={selectedImage}
-      setSelectedImage={setSelectedImage}
-      newImage={newImage}
-      setNewImage={setNewImage}
-      error={error}
-      setError={setError}
-    />
-  );
+  let data = {
+    action: 'create',
+    name,
+    setName,
+    selectedRole,
+    setSelectedRole,
+    selectedEmployeeType,
+    setSelectedEmployeeType,
+    selectedStatus,
+    setSelectedStatus,
+    salary,
+    setSalary,
+    selectedImage,
+    setSelectedImage,
+    newImage,
+    setNewImage,
+    error,
+    setError,
+  };
+
+  return <Form {...data} />;
 };
 
 export default Create;
