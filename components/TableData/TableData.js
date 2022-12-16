@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { RiDeleteBinLine, RiEdit2Line } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
+import { setHeader } from '../../helpers/setHeader';
 import { editEmployee } from '../../redux/editSlice';
 import { deleteEmployee } from '../../redux/employeesSlice';
 
@@ -27,9 +28,17 @@ const TableData = ({ id, image, name, salary, status, role, typeEmployee }) => {
 
   let employeeData = { id, image, name, salary, status, role, typeEmployee };
 
-  const handleEdit = () => {
-    dispatch(editEmployee(employeeData));
-    router.push('/edit');
+  const handleEdit = async () => {
+    if (isAuthenticated) {
+      try {
+        await setHeader();
+        dispatch(editEmployee(employeeData));
+        router.push('/edit');
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+    router.push('/login');
   };
 
   const handleDelete = (id) => {

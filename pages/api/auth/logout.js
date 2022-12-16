@@ -4,12 +4,19 @@ import { serialize } from 'cookie';
 export default async (req, res) => {
   const { cookies } = req;
 
-  const jwt = cookies.token;
+  const jwt = cookies.refreshToken;
 
   if (!jwt) {
     return res.json({ message: 'You already have logged out!' });
   } else {
-    const serialized = serialize('token', null, {
+    const refreshToken = serialize('refreshToken', null, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV !== 'development',
+      sameSite: 'strict',
+      maxAge: -1,
+      path: '/',
+    });
+    const accessToken = serialize('accessToken', null, {
       httpOnly: true,
       secure: process.env.NODE_ENV !== 'development',
       sameSite: 'strict',
@@ -17,7 +24,7 @@ export default async (req, res) => {
       path: '/',
     });
 
-    res.setHeader('Set-Cookie', serialized);
+    res.setHeader('Set-Cookie', [accessToken, refreshToken]);
     res.status(200).json({ message: 'Successfully logged out!' });
   }
 };

@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import Users from '../../../models/usersModel';
 import { sign } from 'jsonwebtoken';
-import { serialize } from 'cookie';
+import cookie, { serialize } from 'cookie';
 import dotenv from 'dotenv';
 import { SignJWT } from 'jose';
 
@@ -53,13 +53,33 @@ export default async (req, res) => {
         .setNotBefore(iat)
         .sign(new TextEncoder().encode(access_token_secret));
 
+      let date = new Date();
+      let expires = date.setTime(date.getTime() + 60 * 60 * 1000);
+      const accessToken = await new SignJWT({ id: userInstance._id })
+        .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
+        .setExpirationTime('5s')
+        .setIssuedAt(iat)
+        .setNotBefore(iat)
+        .sign(new TextEncoder().encode(access_token_secret));
+
+      const serialized_access_token = serialize('accessToken', accessToken, {
+        httpOnly: true,
+        sameSite: 'strict',
+        path: '/',
+        maxAge: expires,
+      });
+
       // avoid sending the password to the frontend
       userInstance.password = undefined;
 
-      // set the header httpOnly cookie
-      res.setHeader('Set-Cookie', serialized_refresh_token);
+      res.setHeader('Set-Cookie', [
+        serialized_refresh_token,
+        serialized_access_token,
+      ]);
 
-      res.status(201).json({ data: userInstance, access_token });
+      res
+        .status(201)
+        .json({ data: userInstance, access_token: `Bearer ${access_token}` });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
