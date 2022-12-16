@@ -22,30 +22,44 @@ export default async (req, res) => {
       if (!validPassword)
         return res.status(400).json({ message: 'Invalid password.' });
 
-      //create a token
+      //create refresh token
+      const refresh_token_secret = process.env.refresh_token;
+      const access_token_secret = process.env.access_token;
       const iat = Math.floor(Date.now() / 1000);
       const exp = iat + 60 * 60; // one hour
-      const token = await new SignJWT({ id: userInstance._id })
+      const refresh_token = await new SignJWT({ id: userInstance._id })
         .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
         .setExpirationTime(exp)
         .setIssuedAt(iat)
         .setNotBefore(iat)
-        .sign(new TextEncoder().encode(process.env.access_token));
+        .sign(new TextEncoder().encode(refresh_token_secret));
 
-      const serialized = serialize('token', token, {
-        httpOnly: true,
-        sameSite: 'strict',
-        maxAge: exp,
-        path: '/',
-      });
+      const serialized_refresh_token = serialize(
+        'refreshToken',
+        refresh_token,
+        {
+          httpOnly: true,
+          sameSite: 'strict',
+          maxAge: exp,
+          path: '/',
+        }
+      );
+
+      //create access token
+      const access_token = await new SignJWT({ id: userInstance._id })
+        .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
+        .setExpirationTime('5s')
+        .setIssuedAt(iat)
+        .setNotBefore(iat)
+        .sign(new TextEncoder().encode(access_token_secret));
 
       // avoid sending the password to the frontend
       userInstance.password = undefined;
 
       // set the header httpOnly cookie
-      res.setHeader('Set-Cookie', serialized);
+      res.setHeader('Set-Cookie', serialized_refresh_token);
 
-      res.status(201).json(userInstance);
+      res.status(201).json({ data: userInstance, access_token });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

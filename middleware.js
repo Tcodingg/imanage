@@ -11,8 +11,6 @@ export default async function middleware(req) {
   const jwt = cookies.get('token');
   const url = req.nextUrl.clone();
 
-  console.log(url);
-
   if (
     req.nextUrl.pathname.includes('/edit') ||
     req.nextUrl.pathname.includes('/api/employees/delete/')
