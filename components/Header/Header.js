@@ -7,17 +7,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/authSlice';
 
 const Header = () => {
-  const {
-    authSlice: { isAuthenticated },
-  } = useSelector((state) => state);
+  let isAuth = localStorage.getItem('isAuth');
   const dispatch = useDispatch();
-
   const handleLogout = () => {
     dispatch(logout());
     localStorage.setItem('isAuth', false);
   };
 
-  let isAuth = localStorage.getItem('isAuth');
   return (
     <header className=' bg-white h-16'>
       <nav className='max-w-4xl m-auto py-2 flex items-center justify-between'>

@@ -17,10 +17,6 @@ const TableData = ({ id, image, name, salary, status, role, typeEmployee }) => {
     minimumFractionDigits: 0,
   });
 
-  const {
-    authSlice: { isAuthenticated },
-  } = useSelector((state) => state);
-
   let altImage;
   if (!image) {
     altImage = name?.substring(0, 1).toUpperCase();
@@ -47,8 +43,7 @@ const TableData = ({ id, image, name, salary, status, role, typeEmployee }) => {
 
     let isAuthenticated = await refreshToken();
     if (isAuthenticated) {
-      dispatch(editEmployee(employeeData));
-      router.push('/edit');
+      dispatch(deleteEmployee(id));
     } else {
       router.push('/login');
     }
