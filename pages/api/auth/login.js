@@ -40,6 +40,7 @@ export default async (req, res) => {
         {
           httpOnly: true,
           sameSite: 'strict',
+          secure: true,
           maxAge: exp,
           path: '/',
         }

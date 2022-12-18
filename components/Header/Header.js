@@ -13,9 +13,11 @@ const Header = () => {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
-    console.log('logout');
     dispatch(logout());
+    localStorage.setItem('isAuth', false);
   };
+
+  let isAuth = localStorage.getItem('isAuth');
   return (
     <header className=' bg-white h-16'>
       <nav className='max-w-4xl m-auto py-2 flex items-center justify-between'>
@@ -39,7 +41,7 @@ const Header = () => {
             <IconContainer icon={<BsEnvelope />} />
           </div>
           <div>
-            {isAuthenticated ? (
+            {isAuth === 'true' ? (
               <IconContainer
                 handleClick={handleLogout}
                 icon={<AiOutlineLogout />}

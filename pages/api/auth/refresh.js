@@ -14,46 +14,47 @@ export default async (req, res) => {
 
   if (!refreshToken) {
     res.status(401).json({ message: 'No refresh token. Please login.' });
-  }
+    res.end();
+  } else {
+    try {
+      const { payload } = await jwtVerify(
+        refreshToken,
+        new TextEncoder().encode(refresh_token_secret)
+      );
 
-  try {
-    const { payload } = await jwtVerify(
-      refreshToken,
-      new TextEncoder().encode(refresh_token_secret)
-    );
+      const iat = Math.floor(Date.now() / 1000);
+      // let date = new Date();
+      // date.setTime(date.getTime() + 30 * 1000);
+      // let expires = '';
+      let date = new Date();
+      let expires = date.setTime(date.getTime() + 60 * 60 * 1000);
+      console.log(expires);
 
-    const iat = Math.floor(Date.now() / 1000);
-    // let date = new Date();
-    // date.setTime(date.getTime() + 30 * 1000);
-    // let expires = '';
-    let date = new Date();
-    let expires = date.setTime(date.getTime() + 60 * 60 * 1000);
-    console.log(expires);
+      const access_token = await new SignJWT({ id: payload.id })
+        .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
+        .setExpirationTime('5s')
+        .setIssuedAt(iat)
+        .setNotBefore(iat)
+        .sign(new TextEncoder().encode(access_token_secret));
 
-    const access_token = await new SignJWT({ id: payload.id })
-      .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
-      .setExpirationTime('5s')
-      .setIssuedAt(iat)
-      .setNotBefore(iat)
-      .sign(new TextEncoder().encode(access_token_secret));
+      const accessToken = await new SignJWT({ id: payload.id })
+        .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
+        .setExpirationTime('5s')
+        .setIssuedAt(iat)
+        .setNotBefore(iat)
+        .sign(new TextEncoder().encode(access_token_secret));
 
-    const accessToken = await new SignJWT({ id: payload.id })
-      .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
-      .setExpirationTime('5s')
-      .setIssuedAt(iat)
-      .setNotBefore(iat)
-      .sign(new TextEncoder().encode(access_token_secret));
+      const serialized_access_token = serialize('accessToken', accessToken, {
+        httpOnly: true,
+        sameSite: 'strict',
+        path: '/',
+        maxAge: expires,
+      });
 
-    const serialized_access_token = serialize('accessToken', accessToken, {
-      httpOnly: true,
-      sameSite: 'strict',
-      path: '/',
-      maxAge: expires,
-    });
-
-    res.setHeader('Set-Cookie', serialized_access_token);
-    res.status(200).json(access_token);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
+      res.setHeader('Set-Cookie', serialized_access_token);
+      res.status(200).json(access_token);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
   }
 };

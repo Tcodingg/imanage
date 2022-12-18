@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { login } from '../redux/authSlice';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 
 const Login = () => {
   const [input, setInput] = useState({
@@ -13,28 +12,36 @@ const Login = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const {
-    authSlice: { isAuthenticated },
-  } = useSelector((state) => state);
+  let isAuth = localStorage.getItem('isAuth');
+  console.log(JSON.parse(isAuth));
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      console.log(router.query.from);
-      router.push(
-        router.query.from ? decodeURIComponent(router.query.from) : '/'
-      );
-    }
-  }, [isAuthenticated]);
+  if (isAuth === 'true') {
+    router.push(
+      router.query.from ? decodeURIComponent(router.query.from) : '/'
+    );
+  }
 
-  console.log(isAuthenticated);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setInput({ ...input, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(login(input));
+    try {
+      dispatch(login(input)).then((result) => {
+        let status = result.meta.requestStatus;
+        if (status !== 'rejected') {
+          router.push(
+            router.query.from ? decodeURIComponent(router.query.from) : '/'
+          );
+
+          localStorage.setItem('isAuth', true);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

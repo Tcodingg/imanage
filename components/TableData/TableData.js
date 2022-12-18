@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { RiDeleteBinLine, RiEdit2Line } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
-import { setHeader } from '../../helpers/setHeader';
+import { refreshToken } from '../../helpers/refreshToken';
 import { editEmployee } from '../../redux/editSlice';
 import { deleteEmployee } from '../../redux/employeesSlice';
 
@@ -29,23 +29,28 @@ const TableData = ({ id, image, name, salary, status, role, typeEmployee }) => {
   let employeeData = { id, image, name, salary, status, role, typeEmployee };
 
   const handleEdit = async () => {
+    let isAuthenticated = await refreshToken();
     if (isAuthenticated) {
-      try {
-        await setHeader();
-        dispatch(editEmployee(employeeData));
-        router.push('/edit');
-      } catch (error) {
-        console.log(error.message);
-      }
+      dispatch(editEmployee(employeeData));
+      router.push('/edit');
+    } else {
+      router.push('/login');
     }
-    router.push('/login');
   };
 
-  const handleDelete = (id) => {
-    if (!isAuthenticated) {
-      router.push('/login');
+  const handleDelete = async (id) => {
+    // if (!isAuthenticated) {
+    //   router.push('/login');
+    // } else {
+    //   dispatch(deleteEmployee(id));
+    // }
+
+    let isAuthenticated = await refreshToken();
+    if (isAuthenticated) {
+      dispatch(editEmployee(employeeData));
+      router.push('/edit');
     } else {
-      dispatch(deleteEmployee(id));
+      router.push('/login');
     }
   };
 

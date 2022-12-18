@@ -19,6 +19,7 @@ export const login = createAsyncThunk(
         data: { access_token, data },
       } = await axios.post('/api/auth/login', body);
       localStorage.setItem('access_token', access_token);
+      localStorage.setItem('isAuth', true);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
