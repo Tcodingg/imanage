@@ -13,17 +13,20 @@ const Table = () => {
     dispatch(getEmployees());
   }, [dispatch]);
   return (
-    <section className='pt-5 ml-auto mr-auto overflow-auto min-h-[366px] max-w-4xl bg-gray-100 h-[calc(100vh-4rem)]'>
-      <table className='text-left  border-collapse border-spacing-0 w-full '>
+    <section className='relative pt-5 ml-auto mr-auto max-w-4xl min-h-[calc(100vh-4rem)] bg-gray-100'>
+      <table className='text-left border-collapse border-spacing-0 w-full '>
         <thead className=''>
-          <tr className='flex justify-between m-0 px-3'>
+          <tr className='flex justify-between m-0 px-3 h-[3.5rem]'>
             <TableHeader title='employee' />
             <TableHeader title='salary' />
             <TableHeader title='status' />
             <TableHeader title='manage' align='text-center' />
           </tr>
         </thead>
-        <tbody>
+        <tbody
+          className='h-[calc(100vh-10.5rem)] overflow-y-scroll block
+        '
+        >
           {employees?.map((data) => (
             <TableData
               key={data?._id}
