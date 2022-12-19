@@ -1,8 +1,10 @@
+import { useRouter } from 'next/router';
 import React from 'react';
 import { useState } from 'react';
 
 const SearchBar = ({ setSearch, search }) => {
   const [input, setInput] = useState();
+  const router = useRouter();
 
   return (
     <div className='flex gap-3 justify-start'>
@@ -13,7 +15,10 @@ const SearchBar = ({ setSearch, search }) => {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
-      <button className='px-2 py-3 bg-green-500 text-white rounded-md'>
+      <button
+        onClick={() => router.push('/create')}
+        className='px-2 py-3 bg-green-500 text-white rounded-md'
+      >
         Add Employee
       </button>
     </div>

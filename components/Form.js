@@ -75,7 +75,7 @@ const Form = ({ ...data }) => {
           <div className='border-4 h-40 w-40 rounded-full mt-3 overflow-hidden'>
             <img
               src={newImage ? URL.createObjectURL(newImage) : selectedImage}
-              alt='employee_image'
+              alt=''
             />
           </div>
           <div className='flex flex-col ml-6 gap-3'>
