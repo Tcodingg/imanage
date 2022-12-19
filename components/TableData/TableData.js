@@ -1,8 +1,7 @@
-import Image from 'next/image';
+import React from 'react';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
 import { RiDeleteBinLine, RiEdit2Line } from 'react-icons/ri';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { refreshToken } from '../../helpers/refreshToken';
 import { editEmployee } from '../../redux/editSlice';
 import { deleteEmployee } from '../../redux/employeesSlice';
@@ -35,12 +34,6 @@ const TableData = ({ id, image, name, salary, status, role, typeEmployee }) => {
   };
 
   const handleDelete = async (id) => {
-    // if (!isAuthenticated) {
-    //   router.push('/login');
-    // } else {
-    //   dispatch(deleteEmployee(id));
-    // }
-
     let isAuthenticated = await refreshToken();
     if (isAuthenticated) {
       dispatch(deleteEmployee(id));

@@ -2,9 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getEmployees } from '../../redux/employeesSlice';
 import TableData from '../TableData/TableData';
-import SearchBar from '../SearchBar';
 
-const Table = () => {
+const Table = ({ search }) => {
   const dispatch = useDispatch();
   const { employees, isLoading, error } = useSelector(
     (state) => state.employeesSlice
@@ -13,6 +12,7 @@ const Table = () => {
   useEffect(() => {
     dispatch(getEmployees());
   }, [dispatch]);
+
   return (
     <section className='relative ml-auto mr-auto max-w-4xl min-h-[calc(100vh-4rem)] bg-gray-100'>
       <table className='text-left border-collapse border-spacing-0 w-full '>
@@ -28,18 +28,22 @@ const Table = () => {
           className='h-[calc(100vh-10.5rem)] overflow-y-scroll block
         '
         >
-          {employees?.map((data) => (
-            <TableData
-              key={data?._id}
-              id={data?._id}
-              image={data?.image}
-              name={data?.name}
-              salary={data?.salary}
-              status={data?.status}
-              role={data?.role}
-              typeEmployee={data?.typeEmployee}
-            />
-          ))}
+          {employees
+            ?.filter(({ name }) =>
+              name.toString().toLowerCase().includes(search.toLowerCase())
+            )
+            .map((data) => (
+              <TableData
+                key={data?._id}
+                id={data?._id}
+                image={data?.image}
+                name={data?.name}
+                salary={data?.salary}
+                status={data?.status}
+                role={data?.role}
+                typeEmployee={data?.typeEmployee}
+              />
+            ))}
         </tbody>
       </table>
     </section>
