@@ -14,6 +14,16 @@ const Table = () => {
   }, [dispatch]);
   return (
     <section className='relative pt-5 ml-auto mr-auto max-w-4xl min-h-[calc(100vh-4rem)] bg-gray-100'>
+      <div className='flex gap-3 justify-start'>
+        <input
+          className='px-2 py-3 rounded-md outline-none text-gray-600'
+          type='text'
+          placeholder='Search By Name'
+        />
+        <button className='px-2 py-3 bg-green-500 text-white rounded-md'>
+          Add Employee
+        </button>
+      </div>
       <table className='text-left border-collapse border-spacing-0 w-full '>
         <thead className=''>
           <tr className='flex justify-between m-0 px-3 h-[3.5rem]'>
