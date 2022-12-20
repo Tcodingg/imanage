@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getEmployees } from '../../redux/employeesSlice';
 import TableData from '../TableData/TableData';
+import TableHeader from '../TableHeader';
 
 const Table = ({ search }) => {
+  const headers = ['name', 'salary', 'status', 'action'];
   const dispatch = useDispatch();
   const { employees, isLoading, error } = useSelector(
     (state) => state.employeesSlice
@@ -15,17 +17,20 @@ const Table = ({ search }) => {
 
   const [data, setData] = useState([...employees]);
   const [order, setOrder] = useState('ascending');
+  const [column, setColumn] = useState();
 
-  function handleSort(key) {
+  function handleSort(col) {
     if (order === 'ascending') {
-      const sort = [...data].sort((a, b) => (a[key] > b[key] ? 1 : -1));
+      const sort = [...data].sort((a, b) => (a[col] > b[col] ? 1 : -1));
       setData(sort);
       setOrder('descending');
+      setColumn(col);
     }
     if (order === 'descending') {
-      const sort = [...data].sort((a, b) => (a[key] < b[key] ? 1 : -1));
+      const sort = [...data].sort((a, b) => (a[col] < b[col] ? 1 : -1));
       setOrder('ascending');
       setData(sort);
+      setColumn(col);
     }
   }
 
@@ -34,19 +39,16 @@ const Table = ({ search }) => {
       <table className='text-left border-collapse border-spacing-0 w-full '>
         <thead className=''>
           <tr className='flex justify-between m-0 px-3 h-[3.5rem]'>
-            <TableHeader
-              title='employee'
-              handleSort={() => handleSort('name')}
-            />
-            <TableHeader
-              title='salary'
-              handleSort={() => handleSort('salary')}
-            />
-            <TableHeader
-              title='status'
-              handleSort={() => handleSort('status')}
-            />
-            <TableHeader title='manage' align='text-center' />
+            {headers.map((name, index) => (
+              <TableHeader
+                key={index}
+                title={name}
+                index={index}
+                col={column}
+                order={order}
+                handleSort={() => handleSort(name)}
+              />
+            ))}
           </tr>
         </thead>
         <tbody
@@ -76,13 +78,3 @@ const Table = ({ search }) => {
 };
 
 export default Table;
-
-function TableHeader({ title, handleSort }) {
-  return (
-    <th className='flex-1 m-0 hover:cursor-pointer' onClick={handleSort}>
-      <p className={'py-5  uppercase text-xs font-medium text-gray-600 '}>
-        {title}
-      </p>
-    </th>
-  );
-}
