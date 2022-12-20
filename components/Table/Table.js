@@ -46,7 +46,9 @@ const Table = ({ search }) => {
                 index={index}
                 col={column}
                 order={order}
-                handleSort={() => handleSort(name)}
+                handleSort={
+                  name !== 'action' ? () => handleSort(name) : () => {}
+                }
               />
             ))}
           </tr>

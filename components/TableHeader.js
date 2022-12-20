@@ -2,7 +2,12 @@ import React from 'react';
 import { HiOutlineSortAscending } from 'react-icons/hi';
 function TableHeader({ title, handleSort, order, col }) {
   return (
-    <th className='flex-1 m-0 hover:cursor-pointer' onClick={handleSort}>
+    <th
+      className={`flex-1 m-0 ${
+        title !== 'action' ? 'hover:cursor-pointer' : ''
+      } `}
+      onClick={handleSort}
+    >
       <p
         className={
           'py-5 flex items-center gap-4 uppercase text-xs font-medium text-gray-600 '
