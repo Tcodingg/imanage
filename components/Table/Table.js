@@ -35,7 +35,7 @@ const Table = ({ search }) => {
   }
 
   return (
-    <section className='relative ml-auto mr-auto max-w-4xl min-h-[calc(100vh-4rem)] bg-gray-100'>
+    <section className='relative ml-auto mr-auto max-w-4xl min-h-[calc(100vh - 4rem)] bg-gray-100'>
       <table className='text-left border-collapse border-spacing-0 w-full '>
         <thead className=''>
           <tr className='flex justify-between m-0 px-3 h-[3.5rem]'>
@@ -52,7 +52,7 @@ const Table = ({ search }) => {
           </tr>
         </thead>
         <tbody
-          className='h-[calc(100vh-10.5rem)] overflow-y-scroll block
+          className='h-[calc(100vh-11.3rem)] overflow-y-scroll block
         '
         >
           {data
