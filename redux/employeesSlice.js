@@ -6,6 +6,7 @@ const initialState = {
   employees: [],
   isLoading: false,
   error: null,
+  order: 'ascending',
 };
 
 export const getEmployees = createAsyncThunk(
@@ -37,7 +38,6 @@ export const deleteEmployee = createAsyncThunk(
 export const updateEmployee = createAsyncThunk(
   'employees/updateEmployee',
   async ({ id, formData }) => {
-    // console.log(formData);
     try {
       const { data } = await axios.patch(
         `/api/employees/update/${id}`,
@@ -75,8 +75,19 @@ const employeesSlice = createSlice({
   name: 'employees',
   initialState,
   reducers: {
-    addEmployee: (state, action) => {
-      state.employees.push(action.payload);
+    sortEmployees: (state, action) => {
+      return {
+        ...state,
+        employees:
+          state.order === 'ascending'
+            ? [...state.employees].sort((a, b) =>
+                a[action.payload] > b[action.payload] ? 1 : -1
+              )
+            : [...state.employees].sort((a, b) =>
+                a[action.payload] < b[action.payload] ? 1 : -1
+              ),
+        order: state.order === 'ascending' ? 'descending' : 'ascending',
+      };
     },
   },
 
@@ -149,3 +160,5 @@ const employeesSlice = createSlice({
 });
 
 export default employeesSlice.reducer;
+
+export const { sortEmployees } = employeesSlice.actions;

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getEmployees } from '../../redux/employeesSlice';
+import { getEmployees, sortEmployees } from '../../redux/employeesSlice';
 import TableData from '../TableData/TableData';
 import TableHeader from '../TableHeader';
 
 const Table = ({ search }) => {
   const headers = ['name', 'salary', 'status', 'action'];
   const dispatch = useDispatch();
-  const { employees, isLoading, error } = useSelector(
+  const [column, setColumn] = useState();
+  const { employees, isLoading, error, order } = useSelector(
     (state) => state.employeesSlice
   );
 
@@ -15,23 +16,9 @@ const Table = ({ search }) => {
     dispatch(getEmployees());
   }, [dispatch]);
 
-  const [data, setData] = useState([...employees]);
-  const [order, setOrder] = useState('ascending');
-  const [column, setColumn] = useState();
-
   function handleSort(col) {
-    if (order === 'ascending') {
-      const sort = [...data].sort((a, b) => (a[col] > b[col] ? 1 : -1));
-      setData(sort);
-      setOrder('descending');
-      setColumn(col);
-    }
-    if (order === 'descending') {
-      const sort = [...data].sort((a, b) => (a[col] < b[col] ? 1 : -1));
-      setOrder('ascending');
-      setData(sort);
-      setColumn(col);
-    }
+    dispatch(sortEmployees(col));
+    setColumn(col);
   }
 
   return (
@@ -57,9 +44,9 @@ const Table = ({ search }) => {
           className='h-[calc(100vh-11.3rem)] overflow-y-scroll block
         '
         >
-          {data
-            ?.filter(({ name }) =>
-              name.toString().toLowerCase().includes(search.toLowerCase())
+          {employees
+            ?.filter((data) =>
+              data.name.toString().toLowerCase().includes(search.toLowerCase())
             )
             .map((data) => (
               <TableData
