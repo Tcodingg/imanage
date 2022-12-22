@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import Button from './Button/Button';
-import CustomSelection from './CustomSelection/CustomSelection';
+import Button from './Button';
+import CustomSelection from './CustomSelection';
 import {
   employeeStatusList,
   employeeTypeList,
