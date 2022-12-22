@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import SearchBar from '../components/SearchBar';
-import Table from '../components/Table/Table';
+import Table from '../components/Table';
 
 export default function Home() {
   const [search, setSearch] = useState('');

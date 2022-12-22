@@ -1,7 +1,7 @@
 import { Provider } from 'react-redux';
 import '../styles/globals.css';
 import { store } from '../redux/store';
-import Layout from '../components/Layout/Layout';
+import Layout from '../components/Layout';
 import { persisterStore } from '../redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getEmployees, sortEmployees } from '../../redux/employeesSlice';
-import TableData from '../TableData/TableData';
-import TableHeader from '../TableHeader';
+import { getEmployees, sortEmployees } from '../redux/employeesSlice';
+import TableData from './TableData';
+import TableHeader from './TableHeader';
 
 const Table = ({ search }) => {
   const headers = ['name', 'salary', 'status', 'action'];

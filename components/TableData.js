@@ -2,9 +2,9 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { RiDeleteBinLine, RiEdit2Line } from 'react-icons/ri';
 import { useDispatch } from 'react-redux';
-import { refreshToken } from '../../helpers/refreshToken';
-import { editEmployee } from '../../redux/editSlice';
-import { deleteEmployee } from '../../redux/employeesSlice';
+import { refreshToken } from '../helpers/refreshToken';
+import { editEmployee } from '../redux/editSlice';
+import { deleteEmployee } from '../redux/employeesSlice';
 
 const TableData = ({ id, image, name, salary, status, role, typeEmployee }) => {
   const dispatch = useDispatch();

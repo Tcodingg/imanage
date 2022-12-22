@@ -4,7 +4,7 @@ import React from 'react';
 import { AiOutlineLogin, AiOutlineLogout } from 'react-icons/ai';
 import { BsEnvelope, BsBell } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../../redux/authSlice';
+import { logout } from '../redux/authSlice';
 
 const Header = () => {
   let isAuth = localStorage.getItem('isAuth');
