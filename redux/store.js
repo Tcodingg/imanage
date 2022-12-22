@@ -2,7 +2,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import employeesSlice from './employeesSlice';
 import editSlice from './editSlice';
 import authSlice from './authSlice';
-import storage from 'redux-persist/lib/storage';
+import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
 import {
   persistStore,
   persistReducer,
@@ -13,6 +13,25 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
+
+const createNoopStorage = () => {
+  return {
+    getItem(_key) {
+      return Promise.resolve(null);
+    },
+    setItem(_key, value) {
+      return Promise.resolve(value);
+    },
+    removeItem(_key) {
+      return Promise.resolve();
+    },
+  };
+};
+
+const storage =
+  typeof window !== 'undefined'
+    ? createWebStorage('local')
+    : createNoopStorage();
 
 const persistConfig = {
   key: 'root',
