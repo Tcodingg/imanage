@@ -63,6 +63,7 @@ const Form = ({ ...data }) => {
       setError(true);
     }
   }
+  console.log(selectedImage);
 
   return (
     <section className='max-w-4xl m-auto px-6 py-6'>
@@ -70,7 +71,11 @@ const Form = ({ ...data }) => {
         <div className='flex items-center '>
           <div className='border-4 h-40 w-40 rounded-full mt-3 overflow-hidden'>
             <img
-              src={newImage ? URL.createObjectURL(newImage) : selectedImage}
+              src={
+                newImage
+                  ? URL.createObjectURL(newImage)
+                  : `/assets/images/employees/${selectedImage}`
+              }
               alt=''
             />
           </div>

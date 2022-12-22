@@ -52,7 +52,7 @@ const TableData = ({ id, image, name, salary, status, role, typeEmployee }) => {
           {image ? (
             <img
               className='rounded-full justify-center items-center border-2 w-[50px] h-[50px]'
-              src={image}
+              src={`/assets/images/employees/${image}`}
               width={50}
               height={50}
               alt={''}
