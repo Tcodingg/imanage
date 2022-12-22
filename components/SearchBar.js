@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
 import React from 'react';
-import { useState } from 'react';
 
 const SearchBar = ({ setSearch, search }) => {
   const router = useRouter();

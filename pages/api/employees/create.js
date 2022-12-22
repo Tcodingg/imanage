@@ -5,7 +5,7 @@ import employees from '../../../models/employees';
 const upload = multer({
   storage: multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, 'public/assets/images/employees'); // images is the folder located in the public
+      cb(null, 'public/assets/images/employees');
     },
     filename: function (req, file, cb) {
       cb(null, Date.now() + file.originalname);
