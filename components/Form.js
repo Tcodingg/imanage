@@ -8,7 +8,6 @@ import {
   employeeTypeList,
   rolesList,
 } from '../helpers/options';
-import { BiArrowBack } from 'react-icons/bi';
 
 import { createEmployee, updateEmployee } from '../redux/employeesSlice';
 
@@ -67,9 +66,6 @@ const Form = ({ ...data }) => {
 
   return (
     <section className='max-w-4xl m-auto px-6 py-6'>
-      <button className='flex items-center gap-2' onClick={() => router.back()}>
-        <BiArrowBack className='text-3xl text-gray-700' />
-      </button>
       <div>
         <div className='flex items-center '>
           <div className='border-4 h-40 w-40 rounded-full mt-3 overflow-hidden'>
