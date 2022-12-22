@@ -50,11 +50,6 @@ const CustomSelection = ({
             isShown ? 'flex' : 'hidden'
           } flex-col max-h-64 w-full `}
         >
-          <input
-            type='text'
-            placeholder='Search'
-            className='p-3 text-base border-b'
-          />
           <ul className='max-h-full overflow-y-scroll z-10 bg-white'>
             {optionsList.map((role, i) => (
               <li
