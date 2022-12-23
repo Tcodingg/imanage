@@ -49,14 +49,14 @@ const TableData = ({ id, image, name, salary, status, role, typeEmployee }) => {
       className='flex bg-white py-3 rounded-md mb-5 w-full px-3 hover:bg-opacity-40 shadow-sm transition-all ease-in-out duration-200'
     >
       <td className='flex gap-3 w-1/4 '>
-        <div className=' justify-center items-center flex w-[50px] h-[50px] border rounded-full'>
+        <div className=' relative justify-center items-center flex w-[50px] h-[50px] border rounded-full'>
           {image ? (
             <Image
               property='true'
-              className='rounded-full justify-center items-center border-2 w-[50px] h-[50px]'
+              className='rounded-full'
               src={`/assets/images/employees/${image}`}
-              width={50}
-              height={50}
+              layout='fill'
+              objectFit='cover'
               alt={''}
             />
           ) : (

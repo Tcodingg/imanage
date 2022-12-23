@@ -70,10 +70,11 @@ const Form = ({ ...data }) => {
     <section className='max-w-4xl m-auto px-6 py-6'>
       <div>
         <div className='flex items-center '>
-          <div className='border-4 h-40 w-40 rounded-full mt-3 overflow-hidden'>
+          <div className='border-4 h-40 w-40 relative rounded-full mt-3 overflow-hidden flex items-center justify-center '>
             <Image
-              height={160}
-              width={160}
+              className='border-0 bg-white rounded-full'
+              layout='fill'
+              objectFit='cover'
               src={
                 newImage
                   ? URL.createObjectURL(newImage)
