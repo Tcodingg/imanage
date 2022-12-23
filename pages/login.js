@@ -13,7 +13,6 @@ const Login = () => {
   const router = useRouter();
 
   let isAuth = localStorage.getItem('isAuth');
-  console.log(JSON.parse(isAuth));
 
   if (isAuth === 'true') {
     router.push(
