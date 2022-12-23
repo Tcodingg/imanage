@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { refreshToken } from '../helpers/refreshToken';
 import { editEmployee } from '../redux/editSlice';
 import { deleteEmployee } from '../redux/employeesSlice';
+import Image from 'next/image';
 
 const TableData = ({ id, image, name, salary, status, role, typeEmployee }) => {
   const dispatch = useDispatch();
@@ -50,7 +51,8 @@ const TableData = ({ id, image, name, salary, status, role, typeEmployee }) => {
       <td className='flex gap-3 w-1/4 '>
         <div className=' justify-center items-center flex w-[50px] h-[50px] border rounded-full'>
           {image ? (
-            <img
+            <Image
+              property={true}
               className='rounded-full justify-center items-center border-2 w-[50px] h-[50px]'
               src={`/assets/images/employees/${image}`}
               width={50}
