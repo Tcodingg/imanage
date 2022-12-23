@@ -72,7 +72,8 @@ const Form = ({ ...data }) => {
         <div className='flex items-center '>
           <div className='border-4 h-40 w-40 rounded-full mt-3 overflow-hidden'>
             <Image
-              priority={true}
+              height={160}
+              width={160}
               src={
                 newImage
                   ? URL.createObjectURL(newImage)
