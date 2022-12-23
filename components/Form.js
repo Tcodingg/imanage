@@ -10,6 +10,7 @@ import {
 } from '../helpers/options';
 
 import { createEmployee, updateEmployee } from '../redux/employeesSlice';
+import Image from 'next/image';
 
 const Form = ({ ...data }) => {
   const {
@@ -70,7 +71,8 @@ const Form = ({ ...data }) => {
       <div>
         <div className='flex items-center '>
           <div className='border-4 h-40 w-40 rounded-full mt-3 overflow-hidden'>
-            <img
+            <Image
+              priority={true}
               src={
                 newImage
                   ? URL.createObjectURL(newImage)
