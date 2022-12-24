@@ -1,6 +1,6 @@
 import nextConnect from 'next-connect';
 import multer from 'multer';
-import employees from '../../../models/employees';
+import db from '../../../config/db';
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -33,27 +33,28 @@ handler.post(async (req, res) => {
   const typeEmployee = req.body.typeEmployee;
   const status = req.body.status;
   const salary = req.body.salary;
+  const sqlInsert = `INSERT INTO Employees(name, image, salary, role, status, typeEmployee ) VALUES (?,?,?,?,?,? )`;
 
-  const newEmployee = {
-    name,
-    image,
-    role,
-    typeEmployee,
-    status,
-    salary,
-  };
-
-  const addEmployee = new employees(newEmployee);
+  const values = [name, image, salary, role, status, typeEmployee];
 
   try {
-    await addEmployee.save();
-    res.status(201).json(addEmployee);
+    const [results] = await db.query(sqlInsert, values);
+    let id = results.insertId;
+
+    let newEmployee = await getEmployee(id);
+
+    res.status(200).json(newEmployee);
   } catch (error) {
-    res.status(409).json({ message: error.message });
+    res.status(400).json(error);
   }
 });
 
 export default handler;
+
+const getEmployee = async (id) => {
+  const [data] = await db.query('SELECT * FROM Employees WHERE _id=?', [id]);
+  return data[0];
+};
 
 export const config = {
   api: {

@@ -16,7 +16,6 @@ export const getEmployees = createAsyncThunk(
       const { data } = await axios.get('/api/employees');
       return data;
     } catch (error) {
-      console.log(error);
       return rejectWithValue(error);
     }
   }
