@@ -11,12 +11,13 @@ const initialState = {
 
 export const getEmployees = createAsyncThunk(
   'employees/getEmployees',
-  async () => {
+  async (_, { rejectWithValue }) => {
     try {
       const { data } = await axios.get('/api/employees');
       return data;
     } catch (error) {
-      return error;
+      console.log(error);
+      return rejectWithValue(error);
     }
   }
 );
