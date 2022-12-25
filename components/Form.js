@@ -64,7 +64,6 @@ const Form = ({ ...data }) => {
       setError(true);
     }
   }
-  console.log(selectedImage);
 
   return (
     <section className='max-w-4xl m-auto px-6 py-6'>
@@ -140,7 +139,7 @@ const Form = ({ ...data }) => {
           <input
             className='border text-base px-2 py-3 appearance-none'
             type='text'
-            value={salary}
+            value={salary == undefined ? null : salary}
             onChange={(e) => setSalary(e.target.value)}
           />
         </FormsContainer>
