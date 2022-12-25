@@ -1,10 +1,9 @@
+/* eslint-disable import/no-anonymous-default-export */
 import bcrypt from 'bcrypt';
-import Users from '../../../models/usersModel';
-import { sign } from 'jsonwebtoken';
-import { serialize } from 'cookie';
 import dotenv from 'dotenv';
+import db from '../../../config/db';
+import { createToken } from '../../../helpers/createToken';
 dotenv.config();
-// eslint-disable-next-line import/no-anonymous-default-export
 export default async (req, res) => {
   const { method } = req;
 
@@ -12,48 +11,64 @@ export default async (req, res) => {
     const { name, password, email } = req.body;
 
     try {
-      // check if the user exits
-      const userExists = await Users.findOne({ email: email });
+      // check if the user exits, returns undefined if the users doesn't exist
+      const exists = await getUser(email);
 
-      // if the users exits, return an error message
-      if (userExists)
-        return res.status(400).json('Email is already registered');
+      // if a users exits, return an error message
+      if (exists) return res.status(400).json('Email is already registered');
 
       // hash the password
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
+      const sqlInsert = `INSERT INTO Users(name,email,password ) VALUES (?,?,? )`;
+      const values = [name, email, hashedPassword];
 
-      // create new user
-      const user = new Users({
-        name,
-        email,
-        password: hashedPassword,
-      });
-      const userInstance = await user.save();
+      let [results] = await db.query(sqlInsert, values);
 
-      // create a token
-      let THIRTY_DAYS = 1000 * 60 * 60 * 24 * 30;
-      const token = sign({ id: user._id }, process.env.access_token, {
-        expiresIn: Math.floor(Date.now() / 1000) + THIRTY_DAYS,
-      });
+      let newUser = await getUser(email);
 
-      const serialized = serialize('authentication', token, {
-        httpOnly: true,
-        sameSite: 'strict',
-        maxAge: THIRTY_DAYS,
-        path: '/',
-      });
+      //create refresh token and accessToken
+      const refresh_token_secret = process.env.refresh_token;
+      const access_token_secret = process.env.access_token;
 
-      // avoid sending the password to the frontend
-      userInstance.password = undefined;
+      const iat = Math.floor(Date.now() / 1000);
+      const expAccess = iat + 60 * 30; // access token expires in 30 minutes
+      const expRefresh = iat + 60 * 60 * 60 * 24; // refresh token expires in 1 day
 
-      // set the header httpOnly cookie
-      res.setHeader('Auth', serialized);
+      const refresh_token = await createToken(
+        refresh_token_secret,
+        'refreshToken',
+        iat,
+        expRefresh,
+        newUser
+      );
+      const access_token = await createToken(
+        access_token_secret,
+        'accessToken',
+        iat,
+        expAccess,
+        newUser
+      );
 
-      res.status(201).json(userInstance);
+      // set headers to httpOnly cookie
+      res.setHeader('Set-Cookie', [refresh_token, access_token]);
+
+      res.status(201).json(newUser);
     } catch (error) {
-      console.log(error);
       res.status(500).json({ message: error.message });
     }
+  }
+};
+
+const getUser = async (email) => {
+  try {
+    const [results] = await db.query(
+      'SELECT name, email FROM Users WHERE email=?',
+      [email]
+    );
+
+    return results[0];
+  } catch (error) {
+    return error;
   }
 };
