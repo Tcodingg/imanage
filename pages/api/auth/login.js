@@ -1,9 +1,6 @@
 import bcrypt from 'bcrypt';
-import Users from '../../../models/usersModel';
-import { sign } from 'jsonwebtoken';
-import cookie, { serialize } from 'cookie';
-import dotenv from 'dotenv';
-import { SignJWT } from 'jose';
+import { createToken } from '../../../helpers/createToken';
+import db from '../../../config/db';
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (req, res) => {
@@ -12,8 +9,8 @@ export default async (req, res) => {
   if (method === 'POST') {
     const { email, password } = req.body;
     try {
-      // check is the user exists
-      const userInstance = await Users.findOne({ email: email });
+      // check if the user exists
+      const userInstance = await getUser(email);
       if (!userInstance)
         return res.status(400).json({ message: 'User does not exist.' });
 
@@ -25,64 +22,45 @@ export default async (req, res) => {
       //create refresh token
       const refresh_token_secret = process.env.refresh_token;
       const access_token_secret = process.env.access_token;
-      const iat = Math.floor(Date.now() / 1000);
-      const exp = iat + 60 * 60; // one hour
-      const refresh_token = await new SignJWT({ id: userInstance._id })
-        .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
-        .setExpirationTime(exp)
-        .setIssuedAt(iat)
-        .setNotBefore(iat)
-        .sign(new TextEncoder().encode(refresh_token_secret));
 
-      const serialized_refresh_token = serialize(
+      const iat = Math.floor(Date.now() / 1000);
+      const expAccess = iat + 60 * 30; // access token expires in 30 minutes
+      const expRefresh = iat + 60 * 60 * 60 * 24; // refresh token expires in 1 day
+
+      const refresh_token = await createToken(
+        refresh_token_secret,
         'refreshToken',
-        refresh_token,
-        {
-          httpOnly: true,
-          sameSite: 'strict',
-          secure: true,
-          maxAge: exp,
-          path: '/',
-        }
+        iat,
+        expRefresh,
+        userInstance
+      );
+      const access_token = await createToken(
+        access_token_secret,
+        'accessToken',
+        iat,
+        expAccess,
+        userInstance
       );
 
-      //create access token
-      const access_token = await new SignJWT({ id: userInstance._id })
-        .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
-        .setExpirationTime('5s')
-        .setIssuedAt(iat)
-        .setNotBefore(iat)
-        .sign(new TextEncoder().encode(access_token_secret));
-
-      let date = new Date();
-      let expires = date.setTime(date.getTime() + 60 * 60 * 1000);
-      const accessToken = await new SignJWT({ id: userInstance._id })
-        .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
-        .setExpirationTime('5s')
-        .setIssuedAt(iat)
-        .setNotBefore(iat)
-        .sign(new TextEncoder().encode(access_token_secret));
-
-      const serialized_access_token = serialize('accessToken', accessToken, {
-        httpOnly: true,
-        sameSite: 'strict',
-        path: '/',
-        maxAge: expires,
-      });
-
-      // avoid sending the password to the frontend
+      res.setHeader('Set-Cookie', [refresh_token, access_token]);
+      //do not send password
       userInstance.password = undefined;
 
-      res.setHeader('Set-Cookie', [
-        serialized_refresh_token,
-        serialized_access_token,
-      ]);
-
-      res
-        .status(201)
-        .json({ data: userInstance, access_token: `Bearer ${access_token}` });
+      res.status(201).json(userInstance);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
+  }
+};
+
+const getUser = async (email) => {
+  try {
+    const [results] = await db.query('SELECT * FROM Users WHERE email=?', [
+      email,
+    ]);
+
+    return results[0];
+  } catch (error) {
+    return error;
   }
 };
