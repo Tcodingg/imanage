@@ -29,7 +29,7 @@ export const logout = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       await axios.get('/api/auth/logout');
-      localStorage.removeItem('access_token');
+      localStorage.setItem('isAuth', false);
       return;
     } catch (error) {
       rejectWithValue(error.message);
