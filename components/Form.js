@@ -3,6 +3,8 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import Button from './Button';
 import CustomSelection from './CustomSelection';
+import FileBase64 from 'react-file-base64';
+
 import {
   employeeStatusList,
   employeeTypeList,
@@ -45,16 +47,26 @@ const Form = ({ ...data }) => {
   function handleClick(e) {
     e.preventDefault();
     if (validInput) {
-      const formData = new FormData();
+      // const formData = new FormData();
 
-      formData.append('id', id);
-      formData.append('image', selectedImage);
-      formData.append('name', name);
-      formData.append('role', selectedRole);
-      formData.append('typeEmployee', selectedEmployeeType);
-      formData.append('status', selectedStatus);
-      formData.append('salary', salary);
+      // formData.append('id', id);
+      // formData.append('image', selectedImage);
+      // formData.append('name', name);
+      // formData.append('role', selectedRole);
+      // formData.append('typeEmployee', selectedEmployeeType);
+      // formData.append('status', selectedStatus);
+      // formData.append('salary', salary);
 
+      let formData = {
+        id,
+        selectedImage,
+        name,
+        selectedRole,
+
+        selectedEmployeeType,
+        selectedStatus,
+        salary,
+      };
       action !== 'create'
         ? dispatch(updateEmployee({ id, formData }))
         : dispatch(createEmployee(formData));
@@ -70,17 +82,21 @@ const Form = ({ ...data }) => {
       <div>
         <div className='flex items-center '>
           <div className='border-4 h-40 w-40 relative rounded-full mt-3 overflow-hidden flex items-center justify-center '>
-            <Image
-              className='border-0 bg-white rounded-full'
-              layout='fill'
-              objectFit='cover'
-              src={
-                newImage
-                  ? URL.createObjectURL(newImage)
-                  : `/assets/images/employees/${selectedImage}`
-              }
-              alt=''
-            />
+            {newImage || selectedImage ? (
+              <Image
+                className='border-0 bg-white rounded-full'
+                layout='fill'
+                objectFit='cover'
+                src={
+                  newImage
+                    ? newImage
+                    : `/assets/images/employees/${selectedImage}`
+                }
+                alt=''
+              />
+            ) : (
+              ''
+            )}
           </div>
           <div className='flex flex-col ml-6 gap-3'>
             <label
@@ -88,13 +104,22 @@ const Form = ({ ...data }) => {
               htmlFor='
             '
             >
-              <input
+              {/* <input
                 className='max-w-[200px]'
                 type='file'
                 accept='image/png, image/gif, image/jpeg'
                 onChange={(e) => {
                   setNewImage(e.target.files[0]);
                   setSelectedImage(e.target.files[0]);
+                }}
+              /> */}
+              <FileBase64
+                type='file'
+                background='red'
+                multiple={false}
+                onDone={({ base64 }) => {
+                  setNewImage(base64);
+                  setSelectedImage(base64);
                 }}
               />
             </label>

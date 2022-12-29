@@ -8,12 +8,6 @@ export default async (req, res) => {
     const id = Number(req.query?.id);
 
     try {
-      let employee = await getEmployee(id);
-      if (employee?.image) {
-        let filePath = `public/assets/images/employees/${employee.image}`;
-        fs.unlinkSync(filePath);
-      }
-
       let deleteEmployee = 'DELETE FROM Employees WHERE _id=?';
 
       await db.query(deleteEmployee, [id]);
@@ -22,10 +16,4 @@ export default async (req, res) => {
       return res.status(400).json({ message: error.message });
     }
   }
-};
-
-const getEmployee = async (id) => {
-  let query = 'SELECT * FROM Employees WHERE _id=?';
-  const [result] = await db.query(query, [id]);
-  return result[0];
 };

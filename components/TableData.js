@@ -42,6 +42,7 @@ const TableData = ({ id, image, name, salary, status, role, typeEmployee }) => {
       router.push('/login');
     }
   };
+  console.log(image);
 
   return (
     <tr
@@ -54,7 +55,7 @@ const TableData = ({ id, image, name, salary, status, role, typeEmployee }) => {
             <Image
               property='true'
               className='rounded-full'
-              src={`/assets/images/employees/${image}`}
+              src={image}
               layout='fill'
               objectFit='cover'
               alt={''}

@@ -27,8 +27,6 @@ export const deleteEmployee = createAsyncThunk(
       await axios.delete(`/api/employees/delete/${id}`);
 
       return id;
-      // if (response.status === 200) return id;
-      // return `${response.status}: ${response.statusText}`;
     } catch (error) {
       return error;
     }
@@ -41,12 +39,7 @@ export const updateEmployee = createAsyncThunk(
     try {
       const { data } = await axios.patch(
         `/api/employees/update/${id}`,
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        }
+        formData
       );
       return data;
     } catch (error) {
@@ -58,12 +51,10 @@ export const updateEmployee = createAsyncThunk(
 export const createEmployee = createAsyncThunk(
   'employees/createEmployee',
   async (formData) => {
+    console.log(formData);
+
     try {
-      const { data } = await axios.post('/api/employees/create', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const { data } = await axios.post('/api/employees/create', formData);
       return data;
     } catch (error) {
       return error;
