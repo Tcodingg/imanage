@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import Button from './Button';
 import CustomSelection from './CustomSelection';
 import FileBase64 from 'react-file-base64';
+import { TbArrowLeft } from 'react-icons/tb';
 
 import {
   employeeStatusList,
@@ -70,6 +71,12 @@ const Form = ({ ...data }) => {
   return (
     <section className='max-w-4xl m-auto px-6 py-6'>
       <div>
+        <div
+          className=' w-10 h-10 flex justify-center items-center rounded-full shadow-md border hover:cursor-pointer'
+          onClick={() => router.back()}
+        >
+          <TbArrowLeft className='text-gray-500 text-2xl' />
+        </div>
         <div className='flex items-center '>
           <div className='border-4 h-40 w-40 relative rounded-full mt-3 overflow-hidden flex items-center justify-center '>
             {newImage || selectedImage ? (
