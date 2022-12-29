@@ -47,16 +47,6 @@ const Form = ({ ...data }) => {
   function handleClick(e) {
     e.preventDefault();
     if (validInput) {
-      // const formData = new FormData();
-
-      // formData.append('id', id);
-      // formData.append('image', selectedImage);
-      // formData.append('name', name);
-      // formData.append('role', selectedRole);
-      // formData.append('typeEmployee', selectedEmployeeType);
-      // formData.append('status', selectedStatus);
-      // formData.append('salary', salary);
-
       let formData = {
         id,
         selectedImage,
