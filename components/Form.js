@@ -77,11 +77,7 @@ const Form = ({ ...data }) => {
                 className='border-0 bg-white rounded-full'
                 layout='fill'
                 objectFit='cover'
-                src={
-                  newImage
-                    ? newImage
-                    : `/assets/images/employees/${selectedImage}`
-                }
+                src={newImage ? newImage : selectedImage}
                 alt=''
               />
             ) : (
@@ -94,15 +90,6 @@ const Form = ({ ...data }) => {
               htmlFor='
             '
             >
-              {/* <input
-                className='max-w-[200px]'
-                type='file'
-                accept='image/png, image/gif, image/jpeg'
-                onChange={(e) => {
-                  setNewImage(e.target.files[0]);
-                  setSelectedImage(e.target.files[0]);
-                }}
-              /> */}
               <FileBase64
                 type='file'
                 background='red'

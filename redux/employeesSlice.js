@@ -51,8 +51,6 @@ export const updateEmployee = createAsyncThunk(
 export const createEmployee = createAsyncThunk(
   'employees/createEmployee',
   async (formData) => {
-    console.log(formData);
-
     try {
       const { data } = await axios.post('/api/employees/create', formData);
       return data;

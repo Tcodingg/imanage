@@ -42,7 +42,6 @@ const TableData = ({ id, image, name, salary, status, role, typeEmployee }) => {
       router.push('/login');
     }
   };
-  console.log(image);
 
   return (
     <tr
