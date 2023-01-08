@@ -45,14 +45,14 @@ const Login = () => {
 
   return (
     <section className='m-auto max-w-4xl h-[calc(100vh-4rem)] '>
-      <div className='flex flex-col items-center justify-center h-full'>
+      <div className='flex flex-col items-center justify-center h-full px-3'>
         <h2 className='capitalize font-bold text-3xl'>login</h2>
-        <form className='flex flex-col gap-3' action=''>
+        <form className='flex flex-col gap-3  w-[100%] md:w-[40%]' action=''>
           <div className='flex flex-col'>
             <label htmlFor='email'>Email:</label>
             <input
               name='email'
-              className='border py-3 px-1 outline-none rounded-sm'
+              className='border py-3 px-1 outline-none rounded-sm w-full'
               type='email'
               onChange={handleChange}
               value={input.email}
@@ -64,13 +64,13 @@ const Login = () => {
               onChange={handleChange}
               value={input.password}
               name='password'
-              className='border py-3 px-1 outline-none rounded-sm'
+              className='border py-3 px-1 outline-none rounded-sm  w-full'
               type='password'
             />
           </div>
           <button
             onClick={handleSubmit}
-            className='bg-blue-500 py-3 text-white rounded-sm'
+            className='bg-blue-500 py-3 text-white rounded-sm  w-full'
           >
             Submit
           </button>
