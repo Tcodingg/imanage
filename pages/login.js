@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../redux/authSlice';
 import { useRouter } from 'next/router';
 
@@ -8,7 +8,9 @@ const Login = () => {
     email: '',
     password: '',
   });
+  const [err, setErr] = useState(null);
 
+  const { error } = useSelector((state) => state.authSlice);
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -27,6 +29,9 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (error) {
+      setErr(true);
+    }
     try {
       dispatch(login(input)).then((result) => {
         let status = result.meta.requestStatus;
@@ -38,16 +43,19 @@ const Login = () => {
           localStorage.setItem('isAuth', true);
         }
       });
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.log(err);
     }
   };
 
   return (
     <section className='m-auto max-w-4xl h-[calc(100vh-4rem)] '>
-      <div className='flex flex-col items-center justify-center h-full px-3'>
-        <h2 className='capitalize font-bold text-3xl'>login</h2>
-        <form className='flex flex-col gap-3  w-[100%] md:w-[40%]' action=''>
+      <div className='flex flex-col items-center justify-center h-full px-3 '>
+        <h2 className='capitalize font-bold text-3xl '>login</h2>
+        <form
+          className='flex flex-col gap-3  w-[100%] md:w-[40%]  relative'
+          action=''
+        >
           <div className='flex flex-col'>
             <label htmlFor='email'>Email:</label>
             <input
@@ -74,6 +82,11 @@ const Login = () => {
           >
             Submit
           </button>
+          {err && (
+            <small className='absolute -bottom-6 text-center w-full bg-red-300'>
+              You&apos;ve entered wrong email or password!
+            </small>
+          )}
         </form>
       </div>
     </section>

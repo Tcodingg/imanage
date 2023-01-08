@@ -19,7 +19,7 @@ export const login = createAsyncThunk(
       localStorage.setItem('isAuth', true);
       return data;
     } catch (error) {
-      return rejectWithValue(error.message);
+      return rejectWithValue(error.response.data.message);
     }
   }
 );
@@ -48,6 +48,7 @@ const authSlice = createSlice({
         state.isAuthenticated = true;
       })
       .addCase(login.rejected, (state, action) => {
+        console.log(action.payload);
         state.error = action.payload;
         state.isAuthenticated = false;
       })
