@@ -5,7 +5,7 @@ const SearchBar = ({ setSearch, search }) => {
   const router = useRouter();
 
   return (
-    <div className='flex gap-3 justify-start'>
+    <div className='flex gap-3 justify-start min-w-[800px] w-full'>
       <input
         className='px-2 py-2 rounded-md outline-none text-gray-600'
         type='text'

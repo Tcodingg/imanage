@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../redux/authSlice';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 const Login = () => {
   const [input, setInput] = useState({
@@ -27,11 +28,14 @@ const Login = () => {
     setInput({ ...input, [name]: value });
   };
 
+  // useEffect(() => {
+  //   if (error) {
+  //     setErr(true);
+  //     console.log(error);
+  //   }
+  // }, [err]);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (error) {
-      setErr(true);
-    }
     try {
       dispatch(login(input)).then((result) => {
         let status = result.meta.requestStatus;
@@ -43,14 +47,16 @@ const Login = () => {
           localStorage.setItem('isAuth', true);
         }
       });
-    } catch (err) {
-      console.log(err);
+    } catch (err) {}
+    if (error) {
+      setErr(true);
+      console.log(error);
     }
   };
 
   return (
-    <section className='m-auto max-w-4xl h-[calc(100vh-4rem)] '>
-      <div className='flex flex-col items-center justify-center h-full px-3 '>
+    <section className=' h-[calc(100vh-4rem)]  bg-gray-100'>
+      <div className='flex flex-col items-center justify-center h-full px-3 max-w-4xl m-auto'>
         <h2 className='capitalize font-bold text-3xl '>login</h2>
         <form
           className='flex flex-col gap-3  w-[100%] md:w-[40%]  relative'

@@ -23,7 +23,7 @@ const Table = ({ search }) => {
 
   return (
     <section className='relative ml-auto mr-auto max-w-4xl min-h-[calc(100vh - 4rem)] bg-gray-100'>
-      <table className='text-left border-collapse border-spacing-0 w-full '>
+      <table className='text-left border-collapse border-spacing-0  w-full'>
         <thead className=''>
           <tr className='flex justify-between m-0 px-3 h-[3.5rem]'>
             {headers.map((name, index) => (
