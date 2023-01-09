@@ -34,7 +34,6 @@ const Login = () => {
       email: isValidEmail,
     });
   }, [input.email, input.password]);
-  console.log(isValid.email, isValid.password);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
