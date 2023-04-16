@@ -46,9 +46,9 @@ const TableData = ({ id, image, name, salary, status, role, typeEmployee }) => {
   return (
     <tr
       id={id}
-      className='flex bg-white py-3 rounded-md mb-5 w-full px-3 hover:bg-opacity-40 shadow-sm transition-all ease-in-out duration-200'
+      className='flex bg-white py-3 rounded-md mb-5 w-full px-2 hover:bg-opacity-40 shadow-sm transition-all ease-in-out duration-200 gap-3'
     >
-      <td className='flex gap-3 w-1/4 '>
+      <td className='flex gap-3 min-w-[200px]'>
         <div className=' relative justify-center items-center flex w-[50px] h-[50px] border rounded-full'>
           {image ? (
             <Image
@@ -71,16 +71,16 @@ const TableData = ({ id, image, name, salary, status, role, typeEmployee }) => {
         </div>
       </td>
 
-      <td className='w-1/4 '>
+      <td className='min-w-[200px] '>
         <p className='text-gray-800'>{salaryInDollars}</p>
         <p className='text-gray-400 capitalize text-xs'>{typeEmployee}</p>
       </td>
 
-      <td className='w-1/4 '>
+      <td className='min-w-[200px]'>
         <p className='capitalize text-gray-600'>{status}</p>
       </td>
 
-      <td className='w-1/4 flex  gap-5 '>
+      <td className='min-w-[200px] flex  gap-5 '>
         <Button handleClick={handleEdit} icon={<RiEdit2Line />} />
         <Button
           handleClick={() => handleDelete(id)}
